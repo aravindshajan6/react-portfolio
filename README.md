@@ -2,4 +2,4 @@
 Web developer portfolio
 
 
-live link : 
+live link : https://aravindshajan6.github.io/react-portfolio/
