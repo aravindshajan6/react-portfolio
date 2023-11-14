@@ -7,7 +7,7 @@ import './themes.css'
 
 //remembering color
 const getStorageColor = () => {
-    let color = 'hsl(252, 35%, 51%)';
+    let color = 'hsl(252, 46.666666666666664%, 29.411764705882355%)';
     if(localStorage.getItem('color')) {
          color = localStorage.getItem('color')
     }
