@@ -9,6 +9,8 @@ import {
 } from 'react-icons/fa';
 import { FiFileText, FiUser, FiExternalLink } from 'react-icons/fi';
 
+import Workm1 from './assets/project-m1.png';
+import Work0 from './assets/project-0.png';
 import Work1 from './assets/project-1.jpeg';
 import Work2 from './assets/project-2.jpg';
 import Work3 from './assets/project-3.jpeg';
@@ -132,11 +134,11 @@ export const stats = [
     title: 'Completed <br /> Projects',
   },
 
-  {
-    id: 3,
-    no: '2',
-    title: 'Apps <br /> Cloned',
-  },
+  // {
+  //   id: 3,
+  //   no: '2',
+  //   title: 'Apps <br /> Cloned',
+  // },
 
   {
     id: 4,
@@ -178,7 +180,7 @@ export const resume = [
     category: 'education',
     icon: <FaGraduationCap />,
     year: '2020',
-    title: 'Engineering Degree <span></span>',
+    title: 'Engineering Degree <span>Prist University</span>',
     desc: 'Computer Science and Engineering',
   },
 
@@ -252,6 +254,60 @@ export const skills = [
 ];
 
 export const portfolio = [
+  {
+    id: 1,
+    img: Workm1,
+    title: 'SportsLive',
+    details: [
+      {
+        icon: <FiFileText />,
+        title: 'Project : ',
+        desc: 'online live scores platform',
+      },
+      {
+        icon: <FiUser />,
+        title: 'Client : ',
+        desc: '-',
+      },
+      {
+        icon: <FaCode />,
+        title: 'Language : ',
+        desc: 'MERN',
+      },
+      {
+        icon: <FiExternalLink />,
+        title: 'Preview : ',
+        desc: 'https://sports-live-api.netlify.app/',
+      },
+    ],
+  },
+  {
+    id: 1,
+    img: Work0,
+    title: 'E-commerce App',
+    details: [
+      {
+        icon: <FiFileText />,
+        title: 'Project : ',
+        desc: 'WebApp',
+      },
+      {
+        icon: <FiUser />,
+        title: 'Client : ',
+        desc: '-',
+      },
+      {
+        icon: <FaCode />,
+        title: 'Language : ',
+        desc: 'MERN',
+      },
+      {
+        icon: <FiExternalLink />,
+        title: 'Preview : ',
+        desc: 'https://elecstore.onrender.com',
+      },
+    ],
+  },
   {
     id: 1,
     img: Work1,
