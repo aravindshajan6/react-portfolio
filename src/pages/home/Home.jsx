@@ -18,9 +18,9 @@ const Home = () => {
           <h1 className="home__title typewriter ">I'm Aravind Shajan 
           </h1><span className='job job-span '>Web Develeoper</span>
 
-          <p className="home__description ">I'm an Apiring MERN stack developer focused on crafting clean and user friendly experiences, I am passionate about building excellent and creative content for the WEB.</p>
+          <p className="home__description ">I'm a MERN stack developer focused on crafting clean and user friendly experiences, I am passionate about building excellent and creative content for the WEB.</p>
 
-          <Link to={'https://github.com/aravindshajan6'} className='button' > {' '} Github <span className="button__icon"> <FaArrowRight/> </span>
+          <Link to={'https://github.com/aravindshajan6'} target='_blank' className='button' > {' '} Github <span className="button__icon"> <FaArrowRight/> </span>
           </Link>
         </div>
       </div>

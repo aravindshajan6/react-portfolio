@@ -157,14 +157,14 @@ export const resume = [
     desc: 'Completed MERN stack developer Course from ENTRI',
   },
 
-  {
-    id: 2,
-    category: 'experience',
-    icon: <FaBriefcase />,
-    year: '2022 - 2023',
-    title: 'Web Developer <span> Freelance </span>',
-    desc: 'Worked as a Freelance Web developer.',
-  },
+  // {
+  //   id: 2,
+  //   category: 'experience',
+  //   icon: <FaBriefcase />,
+  //   year: '2022 - 2023',
+  //   title: 'Web Developer <span> Freelance </span>',
+  //   desc: 'Worked as a Freelance Web developer.',
+  // },
 
   // {
   //   id: 3,
@@ -193,14 +193,14 @@ export const resume = [
     desc: 'Marygiri Senior Secondary School',
   },
 
-  {
-    id: 6,
-    category: 'education',
-    icon: <FaGraduationCap />,
-    year: '2014',
-    title: '10th ',
-    desc: 'Marygiri Senior Secondary School',
-  },
+  // {
+  //   id: 6,
+  //   category: 'education',
+  //   icon: <FaGraduationCap />,
+  //   year: '2014',
+  //   title: '10th ',
+  //   desc: 'Marygiri Senior Secondary School',
+  // },
 ];
 
 export const skills = [
