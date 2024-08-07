@@ -22,7 +22,7 @@ const Contact = () => {
 
       <div className="contact__container container grid">
         <div className="contact__data">
-          <h3 className="contact__title">Contact Me Here</h3>
+          <h3 className="contact__title">Contact Me </h3>
 
           <p className="contact__description">Feel free to get in touch with me on any one of my socials. I am always open to new ideas and opportunities.</p>
 
