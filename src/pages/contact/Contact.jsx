@@ -24,7 +24,7 @@ const Contact = () => {
         <div className="contact__data">
           <h3 className="contact__title">Contact Me </h3>
 
-          <p className="contact__description">Feel free to get in touch with me on any one of my socials. I am always open to new ideas and opportunities.</p>
+          <p className="contact__description">Feel free to get in touch with me on any one of my socials. I am always open to new ideas and opportunities .</p>
 
           <div className="contact__info">
             <div className="info__item">
