@@ -41,3 +41,31 @@
     margin: 10px 0; 
     padding: 10px; 
 }
+
+/* Responsive adjustments */
+
+@media (max-width: 1020px) {
+    .certifications {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap; 
+     width: 100%; 
+     pointer-events: none;
+         
+    }
+}
+
+
+@media (max-width: 768px) {
+    .certificate-card {
+        display: flex;
+        flex-direction: column;
+        
+    }
+}
+
+@media (max-width: 480px) {
+    .certificate-card {
+        flex: 1 1 100%; /* 1 card per row for small screens */
+    }
+}
