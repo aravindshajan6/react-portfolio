@@ -75,11 +75,11 @@ export const personalInfo = [
     description: 'Shajan',
   },
 
-  {
-    id: 3,
-    title: 'Age : ',
-    description: '25 Years',
-  },
+  // {
+  //   id: 3,
+  //   title: 'Age : ',
+  //   description: '25 Years',
+  // },
 
   {
     id: 4,

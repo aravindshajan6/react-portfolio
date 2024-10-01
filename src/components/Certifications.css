@@ -1,0 +1,43 @@
+.certifications {
+    display: flex; 
+    justify-content: space-between; 
+    flex-wrap: wrap; 
+    width: 200%; 
+    position: relative; 
+    margin-top: 100px;
+}
+
+.certificate-card {
+    flex: 1 1 calc(33.33% - 20px); /* Flexible sizing */
+    margin: 10px; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 8px; 
+    overflow: hidden; 
+    text-align: center; 
+    transition: transform 0.3s ease; 
+    position: relative; 
+}
+
+.certificate-card:hover {
+   transform: scale(1.1);
+}
+
+.certificate-card.active {
+    transform: scale(1.5); /* Scale up the card */
+    z-index: 10; 
+    position: fixed; /* Fix the position */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%) scale(1.2); /* Adjust for centering */
+}
+
+.certificate-image {
+    width: 100%; 
+    height: auto; 
+}
+
+.certificate-title {
+    font-size: 1.25em; 
+    margin: 10px 0; 
+    padding: 10px; 
+}
