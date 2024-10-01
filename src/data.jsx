@@ -17,6 +17,9 @@ import Work3 from './assets/project-3.jpeg';
 import Work4 from './assets/project-4.jpeg';
 import Work5 from './assets/project-5.jpg';
 import Work6 from './assets/project-6.jpg';
+import Work7 from './assets/project-7.png';
+import Work8 from './assets/project-8.png';
+import Work9 from './assets/project-9.png';
 
 import Theme1 from './assets/purple.png';
 import Theme2 from './assets/red.png';
@@ -310,6 +313,60 @@ export const portfolio = [
   },
   {
     id: 1,
+    img: Work9,
+    title: 'Ecommerce Dashboard',
+    details: [
+      {
+        icon: <FiFileText />,
+        title: 'Project : ',
+        desc: 'Shopify dashboard with graphs',
+      },
+      {
+        icon: <FiUser />,
+        title: 'Client : ',
+        desc: '-',
+      },
+      {
+        icon: <FaCode />,
+        title: 'Stack : ',
+        desc: 'MERN',
+      },
+      {
+        icon: <FiExternalLink />,
+        title: 'Preview : ',
+        desc: 'https://ecommerce-dashboard-a3ap.onrender.com/',
+      },
+    ],
+  },
+  {
+    id: 8,
+    img: Work8,
+    title: 'Email Auth',
+    details: [
+      {
+        icon: <FiFileText />,
+        title: 'Project : ',
+        desc: 'Email Auth',
+      },
+      {
+        icon: <FiUser />,
+        title: 'Client : ',
+        desc: '-',
+      },
+      {
+        icon: <FaCode />,
+        title: 'Stack : ',
+        desc: 'JS, React, tailwind',
+      },
+      {
+        icon: <FiExternalLink />,
+        title: 'Preview : ',
+        desc: 'https://email-auth-app.onrender.com/',
+      },
+    ],
+  },
+  {
+    id: 1,
     img: Work1,
     title: 'Real Estate Website',
     details: [
@@ -468,6 +525,33 @@ export const portfolio = [
         icon: <FiExternalLink />,
         title: 'Preview : ',
         desc: 'https://aravindshajan6.github.io/piano/',
+      },
+    ],
+  },
+  {
+    id: 7,
+    img: Work7,
+    title: 'Realtime location Tracker',
+    details: [
+      {
+        icon: <FiFileText />,
+        title: 'Project : ',
+        desc: 'Location Tracker',
+      },
+      {
+        icon: <FiUser />,
+        title: 'Client : ',
+        desc: '-',
+      },
+      {
+        icon: <FaCode />,
+        title: 'Stack : ',
+        desc: 'JS, socket.io, Leaflet',
+      },
+      {
+        icon: <FiExternalLink />,
+        title: 'Github : ',
+        desc: 'https://github.com/aravindshajan6/realtime-tracker/tree/main',
       },
     ],
   },
