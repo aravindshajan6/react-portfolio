@@ -66,6 +66,8 @@
 
 @media (max-width: 480px) {
     .certificate-card {
-        flex: 1 1 100%; /* 1 card per row for small screens */
+        display: flex;
+        flex-direction: column;
+        
     }
 }

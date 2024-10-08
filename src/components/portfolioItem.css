@@ -1,0 +1,23 @@
+/* Base Styles */
+body {
+  font-size: 16px; /* Default font size */
+}
+
+.item__icon {
+    color: goldenrod;
+}
+
+/* Mobile Devices */
+@media screen and (max-width: 480px) {
+  body {
+    font-size: 14px; /* Smaller font for mobile */
+  }
+
+  .portfolio__modal {
+    width: calc(100% - 20px);
+  }
+
+  .modal__close {
+    top: 40px;
+  }
+}
