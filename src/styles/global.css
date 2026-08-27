@@ -243,36 +243,7 @@ body {
   box-shadow: 0 0 24px var(--accent-glow);
 }
 
-/* ── marquee ─────────────────────────────────────────────── */
-.marquee {
-  overflow: hidden;
-  white-space: nowrap;
-  border-block: 1px solid var(--border);
-  padding-block: 0.9rem;
-  background: var(--bg-elev);
-  user-select: none;
-}
-.marquee__track {
-  display: inline-flex;
-  gap: 3rem;
-  padding-right: 3rem;
-  animation: marquee-scroll var(--marquee-speed, 28s) linear infinite;
-  will-change: transform;
-}
-.marquee__item {
-  font-family: var(--font-mono);
-  font-size: clamp(1rem, 2.2vw, 1.5rem);
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  display: inline-flex;
-  align-items: center;
-  gap: 3rem;
-  color: var(--text-dim);
-}
-.marquee__item .dot {
-  color: var(--accent);
-  font-size: 0.8em;
-}
+/* ── marquee keyframes (used by ticker + ascii divider) ──── */
 @keyframes marquee-scroll {
   to { transform: translateX(-50%); }
 }

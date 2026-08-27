@@ -1,6 +1,6 @@
 .nav {
   position: fixed;
-  top: 0;
+  top: 28px; /* status ticker sits above */
   left: 0;
   right: 0;
   z-index: 1000;

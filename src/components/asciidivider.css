@@ -1,0 +1,39 @@
+.ascii-divider {
+  overflow: hidden;
+  padding-block: 1.1rem;
+  border-block: 1px solid var(--border);
+  background: var(--bg-elev);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  /* fade the band out toward the edges */
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+.ascii-divider__row {
+  display: flex;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.25;
+  letter-spacing: 0.18em;
+  color: color-mix(in srgb, var(--accent) 38%, var(--text-dim));
+  opacity: 0.5;
+  animation: marquee-scroll 90s linear infinite;
+  will-change: transform;
+}
+
+.ascii-divider__row span {
+  padding-right: 2rem;
+}
+
+.ascii-divider__row--rev {
+  animation-direction: reverse;
+  opacity: 0.3;
+}
+
+.ascii-divider__row:nth-child(3) {
+  opacity: 0.18;
+  animation-duration: 120s;
+}
