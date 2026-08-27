@@ -1,4 +1,4 @@
-import{r as ue,g as Mx,j as Ae}from"./index-d0314e04.js";/**
+import{r as ue,g as Mx,j as Ae}from"./index-df27e2aa.js";/**
  * @license
  * Copyright 2010-2024 Three.js Authors
  * SPDX-License-Identifier: MIT
