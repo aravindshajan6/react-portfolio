@@ -26,10 +26,10 @@
   --scene-fog: #0a0a0f;
   --scene-accent: #8b7dff;
 
-  /* type */
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  /* type — full terminal: mono everywhere */
+  --font-display: 'JetBrains Mono', 'Courier New', monospace;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-body: 'JetBrains Mono', 'Courier New', monospace;
 
   /* scale */
   --size-hero: clamp(3.2rem, 13vw, 11rem);
@@ -112,9 +112,13 @@ button {
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.05;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
+}
+
+body {
+  font-size: 0.95rem;
 }
 
 /* custom cursor hides native one on fine pointers */
@@ -140,14 +144,18 @@ h1, h2, h3, h4 {
 
 .section__index {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--accent);
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-bottom: 1.2rem;
+}
+
+.section__index .prompt {
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .section__index::after {
@@ -217,7 +225,7 @@ h1, h2, h3, h4 {
   text-transform: uppercase;
   color: var(--btn-fg);
   background: var(--btn-bg);
-  border-radius: 999px;
+  border-radius: 8px;
   overflow: hidden;
   transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s ease;
   will-change: transform;
@@ -252,11 +260,10 @@ h1, h2, h3, h4 {
   will-change: transform;
 }
 .marquee__item {
-  font-family: var(--font-display);
-  font-size: clamp(1.1rem, 2.6vw, 1.8rem);
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.02em;
   display: inline-flex;
   align-items: center;
   gap: 3rem;
@@ -277,9 +284,31 @@ h1, h2, h3, h4 {
   position: relative;
   background: var(--bg-elev);
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 12px;
   overflow: hidden;
   transition: border-color 0.4s ease, transform 0.4s var(--ease-out-expo);
+}
+
+/* ── terminal window chrome (title bar + traffic lights) ─── */
+.term-chrome {
+  position: relative;
+}
+.term-chrome::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background:
+    radial-gradient(circle 5px at 18px 14px, #ff5f57 97%, transparent),
+    radial-gradient(circle 5px at 38px 14px, #febc2e 97%, transparent),
+    radial-gradient(circle 5px at 58px 14px, #28c840 97%, transparent),
+    var(--bg-elev-2);
+  border-bottom: 1px solid var(--border);
+  border-radius: 11px 11px 0 0;
+  pointer-events: none;
+  z-index: 3;
 }
 .spot-card::before {
   content: '';

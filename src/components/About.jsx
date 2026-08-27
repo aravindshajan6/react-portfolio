@@ -52,7 +52,7 @@ export default function About() {
   return (
     <section className="section about" id="about" ref={revealRef}>
       <div className="container">
-        <p className="section__index reveal">01 / About</p>
+        <p className="section__index reveal"><span className="prompt">$</span> cat ./about.md</p>
         <h2 className="section__title reveal">
           BEHIND <span className="stroke">THE CODE</span>
         </h2>
@@ -78,7 +78,7 @@ export default function About() {
               style={{ '--reveal-delay': '0.24s' }}
             >
               <a className="btn" href={CV} download>
-                Download CV
+                ./download-cv ↓
               </a>
               <a
                 className="btn btn--ghost"
@@ -86,7 +86,7 @@ export default function About() {
                 target="_blank"
                 rel="noreferrer"
               >
-                GitHub
+                gh --profile ↗
               </a>
             </div>
           </div>

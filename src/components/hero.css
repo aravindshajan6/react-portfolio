@@ -13,6 +13,7 @@
 }
 
 /* elements hidden until the intro timeline runs */
+.hero__prompt,
 .hero__badge,
 .hero__desc,
 .hero__cta .btn,
@@ -20,10 +21,27 @@
 .hero__meta {
   opacity: 0;
 }
+
+.hero__prompt {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+}
+.hero__prompt::after {
+  content: '▌';
+  color: var(--accent);
+  margin-left: 0.3rem;
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
 @media (prefers-reduced-motion: reduce) {
   .hero__title .line-mask > span {
     transform: none !important;
   }
+  .hero__prompt,
   .hero__badge,
   .hero__desc,
   .hero__cta .btn,
@@ -42,7 +60,7 @@
   letter-spacing: 0.25em;
   color: var(--text-dim);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 8px;
   padding: 0.5rem 1.1rem;
   margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
   background: color-mix(in srgb, var(--bg-elev) 70%, transparent);

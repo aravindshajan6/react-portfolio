@@ -54,14 +54,14 @@ const Nav = () => {
     <>
       <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
         <a href="#home" className="nav__logo" onClick={goTo('home')} aria-label="Back to top">
-          AS<span className="accent">.</span>
+          aravind<span className="accent">@</span>portfolio:<span className="accent">~</span>
         </a>
 
         <nav className="nav__links" aria-label="Primary">
-          {navLinks.map((l, i) => (
+          {navLinks.map((l) => (
             <a key={l.id} href={`#${l.id}`} className="nav__link" onClick={goTo(l.id)}>
-              <span className="nav__link-index">0{i + 1}</span>
-              {l.label}
+              <span className="nav__link-index">./</span>
+              {l.label.toLowerCase()}
             </a>
           ))}
         </nav>
@@ -74,7 +74,7 @@ const Nav = () => {
             title="Toggle theme"
           >
             <span className="nav__theme-icon">{theme === 'dark' ? '☀' : '☾'}</span>
-            <span className="nav__theme-label">{theme === 'dark' ? 'LIGHT' : 'DARK'}</span>
+            <span className="nav__theme-label">{theme === 'dark' ? '--light' : '--dark'}</span>
           </button>
 
           <button
@@ -99,12 +99,12 @@ const Nav = () => {
               style={{ transitionDelay: open ? `${0.08 * i + 0.15}s` : '0s' }}
               onClick={goTo(l.id)}
             >
-              <span className="nav-overlay__index">0{i + 1}</span>
-              {l.label}
+              <span className="nav-overlay__index">./</span>
+              {l.label.toLowerCase()}
             </a>
           ))}
         </nav>
-        <div className="nav-overlay__footer mono-label">AVAILABLE FOR FREELANCE — 2026</div>
+        <div className="nav-overlay__footer mono-label">$ status: available_for_freelance — 2026</div>
       </div>
     </>
   );

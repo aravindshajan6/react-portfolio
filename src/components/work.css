@@ -45,7 +45,8 @@
   flex-direction: column;
   background: var(--bg-elev);
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: 12px;
+  padding-top: 28px; /* terminal chrome strip */
   overflow: hidden;
   transition:
     border-color 0.5s var(--ease-out-expo),

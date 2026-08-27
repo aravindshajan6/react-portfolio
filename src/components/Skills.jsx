@@ -58,7 +58,7 @@ export default function Skills() {
   return (
     <section className="section skills-sec" id="skills" ref={revealRef}>
       <div className="container">
-        <p className="section__index reveal">02 / Skills</p>
+        <p className="section__index reveal"><span className="prompt">$</span> ls ./skills --sort=level</p>
         <h2 className="section__title reveal">
           MY <span className="stroke">ARSENAL</span>
         </h2>
@@ -66,7 +66,7 @@ export default function Skills() {
         <div className="skills-grid" ref={gridRef}>
           {skills.map((skill, i) => (
             <article
-              className="spot-card skill-card reveal"
+              className="spot-card skill-card term-chrome reveal"
               key={skill.id}
               onMouseMove={handleSpotlight}
               style={{

@@ -20,7 +20,7 @@
 
 /* ── card ──────────────────────────────────────────────────── */
 .skill-card {
-  padding: 1.6rem 1.5rem 1.75rem;
+  padding: calc(1.1rem + 28px) 1.5rem 1.75rem;
   display: flex;
   flex-direction: column;
 }

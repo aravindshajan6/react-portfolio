@@ -21,10 +21,10 @@
 }
 
 .nav__logo {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 .nav__links {
@@ -35,9 +35,8 @@
 .nav__link {
   position: relative;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
   color: var(--text-dim);
   transition: color 0.3s ease;
   padding-block: 0.3rem;
@@ -45,9 +44,7 @@
 
 .nav__link-index {
   color: var(--accent);
-  font-size: 0.6rem;
-  vertical-align: super;
-  margin-right: 0.35rem;
+  margin-right: 0.1rem;
 }
 
 .nav__link::after {
@@ -86,7 +83,7 @@
   letter-spacing: 0.2em;
   color: var(--text-dim);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 8px;
   padding: 0.45rem 0.95rem;
   transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -110,7 +107,7 @@
   width: 42px;
   height: 42px;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 8px;
   align-items: center;
 }
 .nav__burger span {
@@ -154,10 +151,9 @@
 
 .nav-overlay__link {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 9vw, 4rem);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
+  font-size: clamp(2rem, 8vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
   padding-block: 0.35rem;
   border-bottom: 1px solid var(--border);
   opacity: 0;
@@ -175,10 +171,8 @@
 
 .nav-overlay__index {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
   color: var(--accent);
-  margin-right: 1rem;
-  vertical-align: super;
+  margin-right: 0.5rem;
 }
 
 .nav-overlay__footer {

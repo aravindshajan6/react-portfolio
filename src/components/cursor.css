@@ -18,14 +18,16 @@
 }
 
 .cursor__dot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 12px;
+  border-radius: 1px; /* terminal block cursor */
   background: var(--accent);
 }
 
 .cursor__ring {
   width: 38px;
   height: 38px;
+  border-radius: 8px;
   border: 1px solid var(--accent);
   display: flex;
   align-items: center;

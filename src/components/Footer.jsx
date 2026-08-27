@@ -34,13 +34,13 @@ export default function Footer() {
         </p>
 
         <button type="button" className="footer__top" onClick={backToTop}>
-          Back to top <span aria-hidden="true">&uarr;</span>
+          cd ~ <span aria-hidden="true">&uarr;</span>
         </button>
       </div>
 
       <div className="container">
         <p className="footer__credit">
-          Designed &amp; built by Aravind Shajan &mdash; React &middot; Three.js &middot; anime.js
+          $ echo "designed &amp; built by aravind shajan" — react · three.js · anime.js
         </p>
       </div>
     </footer>

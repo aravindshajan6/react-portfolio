@@ -91,7 +91,7 @@ export default function Work() {
     <section className="section work" id="work" ref={sectionRef}>
       <div className="work__stage" ref={stageRef}>
         <div className="container work__head">
-          <p className="section__index">03 / Selected Work</p>
+          <p className="section__index"><span className="prompt">$</span> git log --oneline ./work</p>
           <h2 className="section__title">
             FEATURED <span className="stroke">WORK</span>
           </h2>
@@ -100,7 +100,7 @@ export default function Work() {
         <div className="work__viewport">
           <div className="work__track" ref={trackRef}>
             {ordered.map((project, i) => (
-              <article className="work-card" data-cursor="view" key={project.id}>
+              <article className="work-card term-chrome" data-cursor="view" key={project.id}>
                 <div className="work-card__media">
                   <img
                     src={project.img}

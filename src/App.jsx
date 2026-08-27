@@ -25,14 +25,25 @@ function App() {
       <main>
         <Hero ready={ready} />
         <Marquee
-          items={['React', 'Node.js', 'MongoDB', 'Express', 'JavaScript', 'Three.js', 'Python']}
+          items={[
+            '$ npm run build',
+            '$ git push origin main',
+            '$ docker compose up',
+            '$ node server.js',
+            '$ pip install fastapi',
+            '$ npx playwright test',
+          ]}
           speed="30s"
         />
         <About />
         <Skills />
         <Work />
         <Marquee
-          items={['Available for freelance', "Let's work together", 'Open to opportunities']}
+          items={[
+            '$ ./hire-me.sh',
+            '$ echo "open to opportunities"',
+            '$ whoami → available for freelance',
+          ]}
           speed="36s"
           reverse
         />

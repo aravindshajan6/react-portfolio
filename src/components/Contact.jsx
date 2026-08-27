@@ -91,12 +91,12 @@ export default function Contact() {
   };
 
   const submitLabel =
-    status === 'sending' ? 'Sending…' : status === 'sent' ? 'Message sent ✓' : 'Send Message';
+    status === 'sending' ? 'Sending…' : status === 'sent' ? 'Message sent ✓' : './send.sh';
 
   return (
     <section className="section contact" id="contact" ref={ref}>
       <div className="container">
-        <p className="section__index">05 / Contact</p>
+        <p className="section__index"><span className="prompt">$</span> ./contact.sh --now</p>
 
         <h2 className="contact__headline">
           <span className="contact__line reveal">LET&rsquo;S BUILD</span>

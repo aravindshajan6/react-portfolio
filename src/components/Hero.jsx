@@ -48,6 +48,7 @@ const Hero = ({ ready }) => {
       duration: 1100,
       delay: stagger(140),
     })
+      .add(root.querySelector('.hero__prompt'), { opacity: [0, 1], duration: 500 }, '-=700')
       .add(root.querySelector('.hero__badge'), { opacity: [0, 1], y: [18, 0], duration: 600 }, '-=600')
       .add(root.querySelector('.hero__desc'), { opacity: [0, 1], y: [22, 0], duration: 700 }, '-=450')
       .add(root.querySelectorAll('.hero__cta .btn'), {
@@ -88,9 +89,13 @@ const Hero = ({ ready }) => {
       </Suspense>
 
       <div className="hero__inner container">
+        <p className="hero__prompt">
+          <span className="accent">aravind@portfolio</span>:~$ ./init.sh
+        </p>
+
         <div className="hero__badge">
           <span className="hero__badge-dot" />
-          AVAILABLE FOR FREELANCE
+          [STATUS: AVAILABLE_FOR_FREELANCE]
         </div>
 
         <h1 className="hero__title">
@@ -115,17 +120,17 @@ const Hero = ({ ready }) => {
             e.preventDefault();
             document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
           }}>
-            View my work ↓
+            ./view-work ↓
           </a>
           <a href={profile.github} target="_blank" rel="noreferrer" className="btn btn--ghost">
-            GitHub ↗
+            gh --profile ↗
           </a>
         </div>
       </div>
 
       <div className="hero__meta mono-label">
-        <span>BASED IN KERALA, IN</span>
-        <span>REACT · NODE · MONGODB</span>
+        <span>$ locale — kerala, IN</span>
+        <span>$ stack — react · node · mongo</span>
       </div>
 
       <div className="hero__scroll" aria-hidden="true">

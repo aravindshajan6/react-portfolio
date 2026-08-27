@@ -20,7 +20,7 @@ export default function Journey() {
   return (
     <section className="section journey" id="journey" ref={ref}>
       <div className="container">
-        <p className="section__index">04 / Journey</p>
+        <p className="section__index"><span className="prompt">$</span> history --career</p>
         <h2 className="section__title reveal">
           PATH <span className="stroke">SO FAR</span>
         </h2>
@@ -55,7 +55,7 @@ export default function Journey() {
               <button
                 key={cert.id}
                 type="button"
-                className="certs__card spot-card reveal"
+                className="certs__card spot-card term-chrome reveal"
                 style={{ '--reveal-delay': `${i * 0.1}s` }}
                 onClick={() => setLightbox(cert)}
                 aria-label={`Enlarge certificate: ${cert.title}`}

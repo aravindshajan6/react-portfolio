@@ -83,10 +83,10 @@ const Preloader = ({ onComplete }) => {
       <div className="preloader__panel" />
       <div className="preloader__content">
         <div className="preloader__brand">
-          ARAVIND<span className="accent">.</span>SHAJAN
+          aravind<span className="accent">@</span>shajan:~$ boot
         </div>
         <div className="preloader__meta">
-          <span>PORTFOLIO — 2026</span>
+          <span>[ BOOTING PORTFOLIO v2.0 ]</span>
           <span className="preloader__counter" ref={counterRef}>
             000
           </span>
