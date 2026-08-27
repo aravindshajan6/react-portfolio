@@ -24,17 +24,22 @@ function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-/* Reads --scene-accent / --bg from the design tokens and re-reads
-   them whenever data-theme flips on <html>. */
+/* Reads theme colors from the design tokens and re-reads them
+   whenever data-theme flips on <html>. */
 function useThemeColors() {
   const read = () => {
     const styles = getComputedStyle(document.documentElement);
+    const light = document.documentElement.getAttribute('data-theme') === 'light';
     return {
       accent:
         styles.getPropertyValue('--scene-accent').trim() ||
         styles.getPropertyValue('--accent').trim() ||
         '#7c6cff',
       bg: styles.getPropertyValue('--bg').trim() || '#0a0a0f',
+      // retro plastic: charcoal in dark mode, classic beige in light mode
+      body: light ? '#d9d2c2' : '#32323e',
+      bodyDark: light ? '#b8b0a0' : '#20202a',
+      isLight: light,
     };
   };
 
@@ -107,137 +112,242 @@ function CameraRig({ pointer, isTouch }) {
   return null;
 }
 
-/* ── gyroscope ring with an orbiting data node ───────────── */
+/* ── CRT screen: canvas texture with typing terminal ─────── */
 
-function GyroRing({ radius, tilt, speed, accent, nodeCount = 1 }) {
-  const orbit = useRef();
+const TERMINAL_LINES = [
+  'ARAVIND.SYS v2.0',
+  '',
+  '> whoami',
+  '  full stack developer',
+  '> skills --top',
+  '  react · node · mongo',
+  '> status',
+  '  AVAILABLE FOR WORK',
+  '> run portfolio',
+];
 
-  useFrame((_, dt) => {
-    if (orbit.current) orbit.current.rotation.z += dt * speed;
-  });
+function useTerminalTexture(accent) {
+  const state = useMemo(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 384;
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.anisotropy = 2;
+    return { canvas, texture, chars: 0, cursorOn: true };
+  }, []);
 
-  const nodes = useMemo(
-    () =>
-      Array.from({ length: nodeCount }, (_, i) => {
-        const a = (i / nodeCount) * Math.PI * 2;
-        return [Math.cos(a) * radius, Math.sin(a) * radius, 0];
-      }),
-    [radius, nodeCount]
+  const draw = useMemo(
+    () => () => {
+      const ctx = state.canvas.getContext('2d');
+      const { width: w, height: h } = state.canvas;
+      // phosphor-dark background with a soft vignette
+      ctx.fillStyle = '#04040a';
+      ctx.fillRect(0, 0, w, h);
+      const grad = ctx.createRadialGradient(w / 2, h / 2, 60, w / 2, h / 2, w * 0.72);
+      grad.addColorStop(0, 'rgba(124, 108, 255, 0.10)');
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0.42)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // typed text (reveals `chars` characters across all lines)
+      ctx.font = 'bold 26px monospace';
+      ctx.fillStyle = accent;
+      ctx.shadowColor = accent;
+      ctx.shadowBlur = 8;
+      let budget = state.chars;
+      let y = 52;
+      let lastX = 26;
+      let lastY = y;
+      for (const line of TERMINAL_LINES) {
+        if (budget <= 0) break;
+        const visible = line.slice(0, budget);
+        ctx.fillText(visible, 26, y);
+        lastX = 26 + ctx.measureText(visible).width;
+        lastY = y;
+        budget -= line.length || 1;
+        y += 36;
+      }
+      // blinking block cursor
+      if (state.cursorOn) {
+        ctx.fillRect(lastX + 6, lastY - 22, 16, 26);
+      }
+      ctx.shadowBlur = 0;
+
+      // scanlines
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.38)';
+      for (let sy = 0; sy < h; sy += 4) {
+        ctx.fillRect(0, sy, w, 2);
+      }
+      state.texture.needsUpdate = true;
+    },
+    [state, accent]
   );
 
-  return (
-    <group rotation={tilt}>
-      {/* the ring itself — thin, holographic */}
-      <mesh>
-        <torusGeometry args={[radius, 0.006, 8, 128]} />
-        <meshBasicMaterial color={accent} transparent opacity={0.38} />
-      </mesh>
+  return { state, draw };
+}
 
-      {/* data nodes travelling along the ring */}
-      <group ref={orbit}>
-        {nodes.map((p, i) => (
-          <group key={i} position={p}>
-            <mesh scale={0.055}>
-              <octahedronGeometry args={[1, 0]} />
-              <meshBasicMaterial color={accent} />
-            </mesh>
-            {/* halo */}
-            <mesh scale={0.11}>
-              <sphereGeometry args={[1, 12, 12]} />
-              <meshBasicMaterial color={accent} transparent opacity={0.15} />
-            </mesh>
-          </group>
-        ))}
-      </group>
+/* ── keyboard: rows of key caps ──────────────────────────── */
+
+function Keyboard({ body, bodyDark, accent }) {
+  const keys = useMemo(() => {
+    const out = [];
+    const rows = 4;
+    const cols = 12;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        out.push([-0.66 + c * 0.12 + (r % 2) * 0.03, 0.05, -0.17 + r * 0.115]);
+      }
+    }
+    return out;
+  }, []);
+
+  return (
+    <group position={[0, -0.62, 1.05]} rotation={[-0.08, 0, 0]}>
+      {/* deck */}
+      <mesh>
+        <boxGeometry args={[1.62, 0.09, 0.62]} />
+        <meshStandardMaterial color={body} roughness={0.55} metalness={0.1} />
+      </mesh>
+      {/* key caps */}
+      {keys.map((p, i) => (
+        <mesh key={i} position={p}>
+          <boxGeometry args={[0.095, 0.05, 0.095]} />
+          <meshStandardMaterial color={bodyDark} roughness={0.6} />
+        </mesh>
+      ))}
+      {/* space bar */}
+      <mesh position={[0, 0.05, 0.29]}>
+        <boxGeometry args={[0.62, 0.05, 0.09]} />
+        <meshStandardMaterial color={bodyDark} roughness={0.6} />
+      </mesh>
+      {/* one accent key, because every rig needs a turbo button */}
+      <mesh position={[0.66, 0.055, 0.29]}>
+        <boxGeometry args={[0.095, 0.055, 0.09]} />
+        <meshStandardMaterial color={accent} emissive={accent} emissiveIntensity={0.5} />
+      </mesh>
     </group>
   );
 }
 
-/* ── dot-matrix sphere (fibonacci distribution) ──────────── */
+/* ── floppy disk drifting alongside ──────────────────────── */
 
-function DotGlobe({ radius, count, color }) {
-  const positions = useMemo(() => {
-    const arr = new Float32Array(count * 3);
-    const golden = Math.PI * (3 - Math.sqrt(5));
-    for (let i = 0; i < count; i++) {
-      const y = 1 - (i / (count - 1)) * 2;
-      const r = Math.sqrt(1 - y * y);
-      const theta = golden * i;
-      arr[i * 3] = Math.cos(theta) * r * radius;
-      arr[i * 3 + 1] = y * radius;
-      arr[i * 3 + 2] = Math.sin(theta) * r * radius;
-    }
-    return arr;
-  }, [radius, count]);
-
+function Floppy({ bodyDark, accent }) {
   return (
-    <Points positions={positions} stride={3} frustumCulled={false}>
-      <PointMaterial
-        transparent
-        color={color}
-        size={0.028}
-        sizeAttenuation
-        depthWrite={false}
-        opacity={0.9}
-      />
-    </Points>
+    <Float speed={2.2} rotationIntensity={1.1} floatIntensity={1.6}>
+      <group position={[-1.55, 0.75, 0.4]} rotation={[0.3, 0.5, -0.15]} scale={0.5}>
+        <mesh>
+          <boxGeometry args={[1, 1, 0.06]} />
+          <meshStandardMaterial color={bodyDark} roughness={0.5} />
+        </mesh>
+        {/* shutter */}
+        <mesh position={[0.05, 0.34, 0.035]}>
+          <boxGeometry args={[0.55, 0.3, 0.02]} />
+          <meshStandardMaterial color="#8a8a94" metalness={0.7} roughness={0.3} />
+        </mesh>
+        {/* label */}
+        <mesh position={[0, -0.22, 0.035]}>
+          <boxGeometry args={[0.7, 0.42, 0.02]} />
+          <meshStandardMaterial color={accent} emissive={accent} emissiveIntensity={0.25} />
+        </mesh>
+      </group>
+    </Float>
   );
 }
 
-/* ── the tech core: holo globe + gyroscope rings ─────────── */
+/* ── the retro computer ──────────────────────────────────── */
 
-function TechCore({ accent, isMobile, isTouch }) {
+function RetroComputer({ colors, isMobile, isTouch }) {
+  const { accent, body, bodyDark } = colors;
   const spin = useRef();
+  const { state, draw } = useTerminalTexture(accent);
+  const totalChars = useMemo(
+    () => TERMINAL_LINES.reduce((n, l) => n + (l.length || 1), 0),
+    []
+  );
 
-  const position = isMobile ? [0, 0.9, 0] : [1.6, 0.1, 0];
-  const scale = isMobile ? 0.72 : 1;
+  const position = isMobile ? [0, 0.95, 0] : [1.7, 0.15, 0];
+  const scale = isMobile ? 0.62 : 0.92;
 
-  useFrame((_, dt) => {
-    if (!spin.current) return;
-    // constant slow spin; a touch faster on touch devices where
-    // there's no pointer parallax to add life
-    spin.current.rotation.y += dt * (isTouch ? 0.22 : 0.12);
+  // redraw when the theme accent changes
+  useEffect(() => {
+    draw();
+  }, [draw]);
+
+  useFrame((clockState, dt) => {
+    const t = clockState.clock.elapsedTime;
+
+    if (spin.current) {
+      if (isTouch) {
+        spin.current.rotation.y += dt * 0.25;
+      } else {
+        // gentle idle sway facing the viewer
+        spin.current.rotation.y = -0.35 + Math.sin(t * 0.4) * 0.16;
+        spin.current.rotation.x = Math.sin(t * 0.3) * 0.05;
+      }
+    }
+
+    // type on the terminal (~18 chars/sec), blink cursor at 2Hz
+    const typed = Math.min(totalChars, Math.floor(t * 18));
+    const cursorOn = Math.floor(t * 2) % 2 === 0;
+    if (typed !== state.chars || cursorOn !== state.cursorOn) {
+      state.chars = typed;
+      state.cursorOn = cursorOn;
+      draw();
+    }
   });
 
   return (
     <group position={position} scale={scale}>
-      <Float speed={1.6} rotationIntensity={0.25} floatIntensity={0.7}>
-        {/* spinning digital globe */}
+      <Float speed={1.5} rotationIntensity={0.18} floatIntensity={0.55}>
         <group ref={spin}>
-          {/* geodesic wireframe shell */}
-          <mesh>
-            <icosahedronGeometry args={[1, 1]} />
-            <meshBasicMaterial color={accent} wireframe transparent opacity={0.42} />
+          {/* ── CRT monitor shell ── */}
+          <mesh position={[0, 0.32, -0.15]}>
+            <boxGeometry args={[1.7, 1.35, 1.15]} />
+            <meshStandardMaterial color={body} roughness={0.55} metalness={0.08} />
+          </mesh>
+          {/* front bezel */}
+          <mesh position={[0, 0.32, 0.44]}>
+            <boxGeometry args={[1.58, 1.22, 0.08]} />
+            <meshStandardMaterial color={bodyDark} roughness={0.6} />
+          </mesh>
+          {/* the screen — glowing terminal */}
+          <mesh position={[0, 0.36, 0.49]}>
+            <planeGeometry args={[1.3, 0.95]} />
+            <meshBasicMaterial map={state.texture} toneMapped={false} />
+          </mesh>
+          {/* screen glass glow */}
+          <mesh position={[0, 0.36, 0.5]}>
+            <planeGeometry args={[1.3, 0.95]} />
+            <meshBasicMaterial color={accent} transparent opacity={0.05} />
+          </mesh>
+          {/* power LED */}
+          <mesh position={[0.62, -0.18, 0.49]}>
+            <sphereGeometry args={[0.025, 12, 12]} />
+            <meshBasicMaterial color={accent} />
+          </mesh>
+          {/* vents on top */}
+          {[-0.45, -0.15, 0.15, 0.45].map((x) => (
+            <mesh key={x} position={[x, 1.01, -0.3]}>
+              <boxGeometry args={[0.2, 0.02, 0.5]} />
+              <meshStandardMaterial color={bodyDark} roughness={0.7} />
+            </mesh>
+          ))}
+
+          {/* ── neck + base ── */}
+          <mesh position={[0, -0.42, -0.15]}>
+            <boxGeometry args={[0.55, 0.16, 0.55]} />
+            <meshStandardMaterial color={bodyDark} roughness={0.6} />
+          </mesh>
+          <mesh position={[0, -0.54, -0.1]}>
+            <boxGeometry args={[1.0, 0.1, 0.8]} />
+            <meshStandardMaterial color={body} roughness={0.55} />
           </mesh>
 
-          {/* dot-matrix surface */}
-          <DotGlobe radius={1} count={220} color={accent} />
-
-          {/* glowing reactor core */}
-          <mesh scale={0.5}>
-            <icosahedronGeometry args={[1, 2]} />
-            <meshStandardMaterial
-              color={accent}
-              emissive={accent}
-              emissiveIntensity={0.85}
-              roughness={0.25}
-              metalness={0.7}
-              transparent
-              opacity={0.92}
-            />
-          </mesh>
-
-          {/* inner halo */}
-          <mesh scale={0.62}>
-            <sphereGeometry args={[1, 24, 24]} />
-            <meshBasicMaterial color={accent} transparent opacity={0.08} />
-          </mesh>
+          {/* ── keyboard ── */}
+          <Keyboard body={body} bodyDark={bodyDark} accent={accent} />
         </group>
 
-        {/* counter-rotating gyroscope rings */}
-        <GyroRing radius={1.35} tilt={[Math.PI / 2.15, 0, 0]} speed={0.55} accent={accent} nodeCount={2} />
-        <GyroRing radius={1.6} tilt={[Math.PI / 3, 0.6, 0]} speed={-0.4} accent={accent} nodeCount={1} />
-        <GyroRing radius={1.85} tilt={[Math.PI / 1.75, -0.5, 0.4]} speed={0.3} accent={accent} nodeCount={1} />
+        <Floppy bodyDark={bodyDark} accent={accent} />
       </Float>
     </group>
   );
@@ -279,7 +389,8 @@ function ParticleField({ color, count }) {
 /* ── scene assembly ──────────────────────────────────────── */
 
 function SceneContents({ isMobile, isTouch, pointer }) {
-  const { accent, bg } = useThemeColors();
+  const colors = useThemeColors();
+  const { accent, bg } = colors;
 
   const dimAccent = useMemo(
     () => `#${new THREE.Color(accent).lerp(new THREE.Color(bg), 0.4).getHexString()}`,
@@ -296,11 +407,11 @@ function SceneContents({ isMobile, isTouch, pointer }) {
 
   return (
     <>
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[3, 4, 5]} intensity={1.1} />
-      <pointLight position={[-3, -2, 2]} intensity={2.5} color={accent} />
+      <ambientLight intensity={colors.isLight ? 0.75 : 0.5} />
+      <directionalLight position={[3, 4, 5]} intensity={colors.isLight ? 1.4 : 1.1} />
+      <pointLight position={[-3, -2, 2]} intensity={2.2} color={accent} />
 
-      <TechCore accent={accent} isMobile={isMobile} isTouch={isTouch} />
+      <RetroComputer colors={colors} isMobile={isMobile} isTouch={isTouch} />
 
       {/* tron-style floor, fading into the distance */}
       <Grid
