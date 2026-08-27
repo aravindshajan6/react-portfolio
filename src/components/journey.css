@@ -113,7 +113,7 @@
   font-weight: 700;
 }
 .timeline__hash {
-  color: var(--accent);
+  color: var(--accent-2);
   font-weight: 600;
 }
 .timeline__ref {
@@ -121,6 +121,7 @@
 }
 .timeline__tag {
   font-style: italic;
+  color: var(--accent-2);
   opacity: 0.8;
 }
 
@@ -417,7 +418,7 @@
   font-weight: 600;
 }
 .lightbox__term-body .is-cmd::first-letter {
-  color: var(--accent);
+  color: var(--accent-2);
 }
 .lightbox__term-body .is-out {
   color: var(--text-dim);
@@ -428,7 +429,7 @@
 }
 
 .lightbox__term-cursor {
-  color: var(--accent);
+  color: var(--accent-2);
   animation: blink 1s steps(1) infinite;
 }
 

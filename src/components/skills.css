@@ -13,7 +13,7 @@
   min-height: 3.1rem;
 }
 .skills-readout .prompt {
-  color: var(--accent);
+  color: var(--accent-2);
   font-weight: 700;
 }
 .skills-readout__out {
@@ -23,7 +23,7 @@
   color: var(--text-dim);
 }
 .skills-readout__cursor {
-  color: var(--accent);
+  color: var(--accent-2);
   margin-left: 0.25rem;
   animation: blink 1.1s steps(1) infinite;
 }
@@ -182,7 +182,7 @@
 }
 
 .skills-board {
-  --key-active: #ff8c42;
+  --key-active: var(--accent-2);
 }
 
 /* glare that follows the cursor */

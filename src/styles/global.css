@@ -23,6 +23,9 @@
   --accent-contrast: #0a0a0f;
   --accent-glow: rgba(124, 108, 255, 0.14);
   --accent-glow-strong: rgba(124, 108, 255, 0.3);
+  /* amber phosphor — prompts, cursors, hashes, status lights */
+  --accent-2: #ff8c42;
+  --accent-2-glow: rgba(255, 140, 66, 0.25);
   --scene-fog: #0a0a0f;
   --scene-accent: #8b7dff;
 
@@ -58,6 +61,8 @@
   --accent-contrast: #f4f1ec;
   --accent-glow: rgba(90, 75, 219, 0.12);
   --accent-glow-strong: rgba(90, 75, 219, 0.24);
+  --accent-2: #d9660f;
+  --accent-2-glow: rgba(217, 102, 15, 0.22);
   --scene-fog: #f4f1ec;
   --scene-accent: #9488ff;
   color-scheme: light;
@@ -154,7 +159,7 @@ body {
 }
 
 .section__index .prompt {
-  color: var(--accent);
+  color: var(--accent-2);
   font-weight: 600;
 }
 

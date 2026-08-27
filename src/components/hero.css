@@ -30,7 +30,7 @@
 }
 .hero__prompt::after {
   content: '▌';
-  color: var(--accent);
+  color: var(--accent-2);
   margin-left: 0.3rem;
   animation: blink 1.1s steps(1) infinite;
 }
@@ -71,8 +71,8 @@
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: var(--accent);
-  box-shadow: 0 0 12px var(--accent);
+  background: var(--accent-2);
+  box-shadow: 0 0 12px var(--accent-2);
   animation: pulse 2s ease-in-out infinite;
 }
 @keyframes pulse {

@@ -33,7 +33,7 @@ const Nav = () => {
       document.documentElement.removeAttribute('data-theme');
     }
     try {
-      localStorage.setItem('theme', next);
+      localStorage.setItem('theme-v2', next);
     } catch (e) {
       /* private mode */
     }
