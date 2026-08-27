@@ -159,7 +159,7 @@ export const projects = [
     title: 'Steaminc',
     desc: 'Finds where any movie is legally streaming in your region, and plays public-domain films straight from the Internet Archive.',
     stack: ['Node.js', 'JavaScript', 'TMDB API', 'Docker'],
-    link: 'https://github.com/aravindshajan6/steaminc',
+    link: 'https://steaminc.onrender.com/',
     featured: true,
   },
   {
