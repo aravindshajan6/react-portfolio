@@ -1,5 +1,5 @@
 // ── Central content file — edit your info here ─────────────────────────────
-import Workm1 from './assets/project-m1.webp';
+import WorkSportscast from './assets/project-sportscast.webp';
 import Work0 from './assets/project-0.webp';
 import Work1 from './assets/project-1.webp';
 import Work2 from './assets/project-2.webp';
@@ -107,6 +107,16 @@ export const certifications = [
 
 export const projects = [
   {
+    id: 17,
+    img: WorkSportscast,
+    title: 'Sportscast',
+    desc: 'Live football scores, fixtures, 3D formation pitch, match stats and an RSS news hub — React 19 + anime.js front, Express 5 + MongoDB API, shipped with Docker.',
+    stack: ['React', 'anime.js', 'Express', 'MongoDB', 'Docker'],
+    link: 'https://sportscast-web.onrender.com/',
+    repo: 'https://github.com/aravindshajan6/SportsLive',
+    featured: true,
+  },
+  {
     id: 1,
     img: WorkLoan,
     title: 'Loan Management System',
@@ -128,9 +138,9 @@ export const projects = [
     id: 15,
     img: WorkMotionAI,
     title: 'MotionAI',
-    desc: 'Editorial-grade AI video studio — drop a photo, pick an effect, get a social-ready motion clip.',
+    desc: 'Editorial-grade AI video studio (live as Pixloops) — drop a photo, pick an effect, get a social-ready motion clip.',
     stack: ['React', 'AI Video', 'Templates'],
-    link: null,
+    link: 'https://pixloops.app/',
     featured: true,
   },
   {
@@ -167,15 +177,6 @@ export const projects = [
     desc: 'Chat and video calls in the browser, built on the Stream SDK with JWT auth.',
     stack: ['React', 'Stream SDK', 'Express', 'MongoDB'],
     link: 'https://github.com/aravindshajan6/StreamGen',
-    featured: true,
-  },
-  {
-    id: 4,
-    img: Workm1,
-    title: 'SportsLive',
-    desc: 'Live football scores and news, pulled from an open sports API.',
-    stack: ['React', 'Express', 'MongoDB'],
-    link: 'https://sports-live-api.netlify.app/',
     featured: true,
   },
   {
