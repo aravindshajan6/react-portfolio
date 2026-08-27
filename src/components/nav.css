@@ -212,19 +212,28 @@
 
 /* ── terminal trigger ───────────────────────────────────────── */
 .nav__term {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--accent-2);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0.42rem 0.75rem;
   transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .nav__term:hover {
+  color: var(--text);
   border-color: var(--accent-2);
   box-shadow: 0 0 18px var(--accent-2-glow);
+}
+.nav__term-icon {
+  color: var(--accent-2);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 /* ── page progress bar (anime.js onScroll) ──────────────────── */
@@ -242,8 +251,12 @@
 }
 
 @media (max-width: 860px) {
-  .nav__cwd {
+  .nav__cwd,
+  .nav__term-label {
     display: none;
+  }
+  .nav__term {
+    padding: 0.45rem 0.7rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {

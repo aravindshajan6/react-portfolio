@@ -145,7 +145,8 @@ const Nav = () => {
             aria-label="Open interactive terminal"
             title="Terminal  (` or Ctrl+K)"
           >
-            &gt;_
+            <span className="nav__term-icon" aria-hidden="true">&gt;_</span>
+            <span className="nav__term-label">terminal</span>
           </button>
 
           <button
