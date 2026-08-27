@@ -72,26 +72,36 @@
   position: relative;
   display: block;
   width: 100%;
+  aspect-ratio: 1.3 / 1;
   text-align: left;
   transform-style: preserve-3d;
   transform: rotateX(var(--rx)) rotateY(var(--ry));
   transition: transform 0.18s ease-out;
   cursor: pointer;
   outline-offset: 6px;
+  /* the visible plastic skirt: top face is inset from the base */
+  padding: 8px 10px 20px;
 }
 .keycap:focus-visible {
   outline: 2px solid var(--accent);
 }
 
-/* extruded base — the key's plastic sides */
+/* extruded base — the key's sloped plastic sides */
 .keycap__side {
   position: absolute;
   inset: 0;
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--bg-elev-2) 70%, black);
+  border-radius: 16px;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--bg-elev-2) 55%, var(--text) 7%),
+    color-mix(in srgb, var(--bg-elev-2) 60%, black) 30%,
+    color-mix(in srgb, var(--bg-elev-2) 35%, black)
+  );
   border: 1px solid var(--border);
   transform: translateZ(0);
-  box-shadow: 0 18px 30px -12px rgba(0, 0, 0, 0.55);
+  box-shadow:
+    inset 0 -3px 0 rgba(0, 0, 0, 0.45),
+    0 20px 32px -12px rgba(0, 0, 0, 0.6);
   transition: box-shadow 0.25s ease;
 }
 
@@ -117,29 +127,33 @@
   opacity: 0.4;
 }
 
-/* the top face */
+/* the top face — smaller than the base, like a real keycap */
 .keycap__top {
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 0.3rem;
-  padding: 1.1rem 1.15rem 1rem;
-  border-radius: 12px;
-  border: 1px solid color-mix(in srgb, var(--text) 14%, var(--border));
+  height: 100%;
+  padding: 1rem 1.1rem 0.9rem;
+  border-radius: 11px;
+  border: 1px solid color-mix(in srgb, var(--text) 16%, var(--border));
+  /* lit from above: bright top edge, darker toward the front lip */
   background: linear-gradient(
-    160deg,
-    color-mix(in srgb, var(--bg-elev-2) 65%, var(--text) 4%),
+    to bottom,
+    color-mix(in srgb, var(--bg-elev-2) 55%, var(--text) 9%),
+    color-mix(in srgb, var(--bg-elev-2) 80%, var(--text) 3%) 22%,
     var(--bg-elev)
   );
-  transform: translateZ(18px);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text) 22%, transparent);
+  transform: translateZ(20px);
   transition: transform 0.12s ease, border-color 0.3s ease;
   overflow: hidden;
-  min-height: 100%;
 }
 
-/* press — the key physically travels down */
+/* press — the key physically travels down into its skirt */
 .keycap:active .keycap__top {
-  transform: translateZ(5px);
+  transform: translateZ(4px) translateY(4px);
 }
 .keycap:active .keycap__side {
   box-shadow: 0 8px 16px -10px rgba(0, 0, 0, 0.55);
@@ -228,8 +242,24 @@
 
 /* light theme: softer shadows, plastic reads beige */
 [data-theme='light'] .keycap__side {
-  background: color-mix(in srgb, var(--bg-elev-2) 80%, black 6%);
-  box-shadow: 0 16px 26px -14px rgba(40, 36, 20, 0.35);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--bg-elev-2) 75%, white),
+    var(--bg-elev-2) 30%,
+    color-mix(in srgb, var(--bg-elev-2) 78%, black)
+  );
+  box-shadow:
+    inset 0 -3px 0 rgba(60, 52, 30, 0.25),
+    0 16px 26px -14px rgba(40, 36, 20, 0.4);
+}
+[data-theme='light'] .keycap__top {
+  background: linear-gradient(
+    to bottom,
+    #fdfcf9,
+    var(--bg-elev) 25%,
+    color-mix(in srgb, var(--bg-elev) 92%, black)
+  );
+  box-shadow: inset 0 1px 0 #ffffff;
 }
 [data-theme='light'] .keycap__glare {
   background: radial-gradient(
