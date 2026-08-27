@@ -158,11 +158,31 @@
 .keycap:active .keycap__side {
   box-shadow: 0 8px 16px -10px rgba(0, 0, 0, 0.55);
 }
+/* the currently pressed key glows orange */
 .keycap.is-active .keycap__top {
-  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  border-color: color-mix(in srgb, var(--key-active) 70%, var(--border));
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--key-active) 22%, var(--bg-elev-2)),
+    color-mix(in srgb, var(--key-active) 10%, var(--bg-elev)) 30%,
+    var(--bg-elev)
+  );
+}
+.keycap.is-active .keycap__pct,
+.keycap.is-active .keycap__index {
+  color: var(--key-active);
+}
+.keycap.is-active .keycap__led::after {
+  background: var(--key-active);
+  box-shadow: 0 0 10px var(--key-active);
 }
 .keywrap:has(.is-active)::after {
+  background: var(--key-active);
   opacity: 0.5;
+}
+
+.skills-board {
+  --key-active: #ff8c42;
 }
 
 /* glare that follows the cursor */
