@@ -120,15 +120,6 @@ export default function Contact() {
                 </a>
               </div>
               <div className="contact__row reveal" style={{ '--reveal-delay': '0.16s' }}>
-                <span className="mono-label">Phone</span>
-                <a
-                  className="contact__link"
-                  href={`tel:${profile.phone.replace(/\s+/g, '')}`}
-                >
-                  {profile.phone}
-                </a>
-              </div>
-              <div className="contact__row reveal" style={{ '--reveal-delay': '0.24s' }}>
                 <span className="mono-label">Location</span>
                 <span className="contact__link contact__link--static">
                   {profile.location}

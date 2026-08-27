@@ -26,7 +26,6 @@ export const profile = {
     'I build automation with Python and web apps with MERN stack — Playwright, FastAPI, React, Node.',
   location: 'Kannur, Kerala, India',
   email: 'aravindshajan6@gmail.com',
-  phone: '+91 9072016134',
   freelance: 'Available',
   languages: ['English', 'Hindi', 'Malayalam'],
   github: 'https://github.com/aravindshajan6',
