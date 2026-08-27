@@ -82,7 +82,7 @@ export default function About() {
           {/* ── left: bio ─────────────────────────────────── */}
           <div className="about__bio">
             <p className="reveal">
-              I&apos;m Aravind, a full stack developer from Kannur, Kerala. These days most of my
+              I&apos;m Aravind, a full stack developer from Kerala, India. These days most of my
               time goes into Python and automation — browser automation with Playwright and
               Selenium, scrapers and bots, APIs with FastAPI. The rest is MERN-stack work:
               I&apos;ve built a loan platform for a bank, a couple of streaming apps, and a piano

@@ -33,8 +33,8 @@ export default function Footer() {
       <div className="container footer__row">
         <p className="footer__copy">&copy; {new Date().getFullYear()} Aravind Shajan</p>
 
-        <p className="footer__time" aria-label="Current local time in Kannur, India">
-          KANNUR, IN &mdash; <span className="footer__clock">{time}</span> IST
+        <p className="footer__time" aria-label="Current local time in Kerala, India">
+          KERALA, IN &mdash; <span className="footer__clock">{time}</span> IST
         </p>
 
         <button type="button" className="footer__top" onClick={backToTop}>

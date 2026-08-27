@@ -24,7 +24,7 @@ export const profile = {
   role: 'Full Stack Developer',
   tagline:
     'I build automation with Python and web apps with MERN stack — Playwright, FastAPI, React, Node.',
-  location: 'Kannur, Kerala, India',
+  location: 'Kerala, India',
   email: 'aravindshajan6@gmail.com',
   freelance: 'Available',
   languages: ['English', 'Hindi', 'Malayalam'],
