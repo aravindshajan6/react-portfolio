@@ -6,7 +6,6 @@ import './contact.css';
 const socials = [
   { id: 'github', label: 'GitHub', href: profile.github },
   { id: 'linkedin', label: 'LinkedIn', href: profile.linkedin },
-  { id: 'whatsapp', label: 'WhatsApp', href: profile.whatsapp },
 ];
 
 export default function Contact() {
@@ -109,7 +108,7 @@ export default function Contact() {
           <div className="contact__info">
             <p className="contact__invite reveal">
               Have a project, a role, or a question? Mail me &mdash; I usually
-              reply within a day. WhatsApp works too if it&rsquo;s urgent.
+              reply within a day.
             </p>
 
             <div className="contact__rows">

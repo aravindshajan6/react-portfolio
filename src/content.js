@@ -30,7 +30,6 @@ export const profile = {
   languages: ['English', 'Hindi', 'Malayalam'],
   github: 'https://github.com/aravindshajan6',
   linkedin: 'https://www.linkedin.com/in/aravindshajan/',
-  whatsapp: 'https://wa.me/919072016134',
 
   // Contact form delivery — get a free access key at https://web3forms.com
   // (enter your email, the key arrives instantly). Paste it here and the
