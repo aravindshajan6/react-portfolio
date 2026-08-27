@@ -58,15 +58,9 @@
   transform: none;
 }
 
-/* layer 2 — idle floating wave across the board */
+/* layer 2 — kept as a plain 3D context (idle wave removed: perf) */
 .keyfloat {
   transform-style: preserve-3d;
-  animation: key-float 4.6s ease-in-out infinite;
-  animation-delay: calc(var(--i) * -0.4s);
-}
-@keyframes key-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
 }
 
 /* layer 3 — the keycap itself: tilt + press */
@@ -246,9 +240,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .keyfloat {
-    animation: none;
-  }
   .keycap {
     transform: none !important;
   }
