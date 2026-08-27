@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" font-family="'JetBrains Mono', monospace">
+  <defs>
+    <pattern id="sgrid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#26262e" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="sglow" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7c6cff" stop-opacity="0.25"/>
+      <stop offset="60%" stop-color="#7c6cff" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#7c6cff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2a2440"/>
+      <stop offset="100%" stop-color="#16131f"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#0f0f16"/>
+  <rect width="1600" height="1000" fill="url(#sgrid)"/>
+  <rect width="1600" height="1000" fill="url(#sglow)"/>
+
+  <text x="160" y="120" fill="#ededf2" font-size="54" font-weight="700" letter-spacing="6">STREAMGEN</text>
+  <text x="160" y="165" fill="#8a8a94" font-size="22" letter-spacing="5">REAL-TIME CHAT · VIDEO CALLS · STREAM SDK</text>
+
+  <!-- video call tiles -->
+  <rect x="160" y="220" width="620" height="420" rx="16" fill="url(#tile)" stroke="#26262e" stroke-width="2"/>
+  <circle cx="470" cy="400" r="80" fill="#7c6cff" opacity="0.25"/>
+  <circle cx="470" cy="375" r="38" fill="#7c6cff" opacity="0.6"/>
+  <path d="M 400 480 Q 470 420 540 480 L 540 500 L 400 500 Z" fill="#7c6cff" opacity="0.6"/>
+  <rect x="180" y="595" width="130" height="30" rx="15" fill="#0f0f16" opacity="0.8"/>
+  <text x="196" y="616" fill="#ededf2" font-size="18">aravind</text>
+  <circle cx="740" cy="255" r="9" fill="#4ade80"/>
+
+  <rect x="810" y="220" width="620" height="420" rx="16" fill="url(#tile)" stroke="#26262e" stroke-width="2"/>
+  <circle cx="1120" cy="400" r="80" fill="#7c6cff" opacity="0.18"/>
+  <circle cx="1120" cy="375" r="38" fill="#7c6cff" opacity="0.45"/>
+  <path d="M 1050 480 Q 1120 420 1190 480 L 1190 500 L 1050 500 Z" fill="#7c6cff" opacity="0.45"/>
+  <rect x="830" y="595" width="110" height="30" rx="15" fill="#0f0f16" opacity="0.8"/>
+  <text x="846" y="616" fill="#ededf2" font-size="18">peer_01</text>
+
+  <!-- call controls -->
+  <g>
+    <circle cx="720" cy="720" r="34" fill="#1a1a22" stroke="#26262e" stroke-width="2"/>
+    <rect x="708" y="708" width="24" height="16" rx="4" fill="#8a8a94"/>
+    <path d="M 736 712 L 748 704 L 748 728 L 736 720 Z" fill="#8a8a94"/>
+    <circle cx="800" cy="720" r="34" fill="#1a1a22" stroke="#26262e" stroke-width="2"/>
+    <rect x="792" y="704" width="16" height="22" rx="8" fill="#8a8a94"/>
+    <path d="M 786 720 Q 786 738 800 738 Q 814 738 814 720" stroke="#8a8a94" stroke-width="3" fill="none"/>
+    <circle cx="880" cy="720" r="34" fill="#e5484d"/>
+    <path d="M 862 724 Q 880 708 898 724 L 892 732 Q 880 722 868 732 Z" fill="#fff"/>
+  </g>
+
+  <!-- chat strip -->
+  <g font-size="19">
+    <rect x="160" y="790" width="460" height="46" rx="20" fill="#1a1a22"/>
+    <text x="184" y="820" fill="#8a8a94">hey! joining the call now 👋</text>
+    <rect x="980" y="790" width="450" height="46" rx="20" fill="#7c6cff" opacity="0.22"/>
+    <text x="1004" y="820" fill="#c9c2ff">connected · latency 24ms</text>
+  </g>
+
+  <text x="160" y="920" fill="#5c5c64" font-size="20" letter-spacing="4">REACT 19 · STREAM CHAT + VIDEO SDK · EXPRESS · MONGODB · JWT</text>
+</svg>

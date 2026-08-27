@@ -1,32 +1,47 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
+import { useState } from 'react';
+import { ReactLenis } from 'lenis/react';
 
-import Navbar from "./components/Navbar";
-import Themes from "./components/Themes";
-import Home from "./pages/home/Home";
-import About from "./pages/about/About";
-import Portfolio from "./pages/portfolio/Portfolio";
-import Contact from "./pages/contact/Contact";
-import FloatingShapes from "./components/FloatingShapes";
-import RandomBubbles from "./components/Bubbles";
+import Preloader from './components/Preloader';
+import Cursor from './components/Cursor';
+import Nav from './components/Nav';
+import Hero from './components/Hero';
+import Marquee from './components/Marquee';
+import About from './components/About';
+import Skills from './components/Skills';
+import Work from './components/Work';
+import Journey from './components/Journey';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
 
 function App() {
-  return (
-    <BrowserRouter>
-      <div id="app">
-        {/* common */}
-        <FloatingShapes /> 
-        {/* <RandomBubbles />  */}
-        <Navbar />
-        <Themes />
+  const [ready, setReady] = useState(false);
 
-        <Routes></Routes>
-        <Home index />
+  return (
+    <ReactLenis root options={{ lerp: 0.18, duration: 0.9, wheelMultiplier: 1.15 }}>
+      <Preloader onComplete={() => setReady(true)} />
+      <Cursor />
+      <Nav />
+
+      <main>
+        <Hero ready={ready} />
+        <Marquee
+          items={['React', 'Node.js', 'MongoDB', 'Express', 'JavaScript', 'Three.js', 'Python']}
+          speed="30s"
+        />
         <About />
-        <Portfolio />
+        <Skills />
+        <Work />
+        <Marquee
+          items={['Available for freelance', "Let's work together", 'Open to opportunities']}
+          speed="36s"
+          reverse
+        />
+        <Journey />
         <Contact />
-      </div>
-    </BrowserRouter>
+      </main>
+
+      <Footer />
+    </ReactLenis>
   );
 }
 

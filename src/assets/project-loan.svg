@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" font-family="'JetBrains Mono', monospace">
+  <defs>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#26262e" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7c6cff" stop-opacity="0.25"/>
+      <stop offset="60%" stop-color="#7c6cff" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#7c6cff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#0f0f16"/>
+  <rect width="1600" height="1000" fill="url(#grid)"/>
+  <rect width="1600" height="1000" fill="url(#glow)"/>
+
+  <!-- window chrome -->
+  <rect x="160" y="140" width="1280" height="720" rx="18" fill="#121218" stroke="#26262e" stroke-width="2"/>
+  <circle cx="210" cy="185" r="8" fill="#26262e"/>
+  <circle cx="238" cy="185" r="8" fill="#26262e"/>
+  <circle cx="266" cy="185" r="8" fill="#7c6cff"/>
+  <text x="300" y="192" fill="#8a8a94" font-size="20">loan-core — approval-engine</text>
+  <line x1="160" y1="220" x2="1440" y2="220" stroke="#26262e" stroke-width="2"/>
+
+  <!-- headline -->
+  <text x="240" y="330" fill="#ededf2" font-size="56" font-weight="700" letter-spacing="4">LOAN MANAGEMENT</text>
+  <text x="240" y="400" fill="#7c6cff" font-size="56" font-weight="700" letter-spacing="4">SYSTEM</text>
+  <text x="240" y="450" fill="#8a8a94" font-size="24" letter-spacing="6">CORE BANKING · RULE ENGINE · WORKFLOWS</text>
+
+  <!-- fake pipeline rows -->
+  <g font-size="22">
+    <rect x="240" y="510" width="560" height="54" rx="10" fill="#1a1a22"/>
+    <text x="262" y="544" fill="#8a8a94">ORIGINATION</text>
+    <rect x="640" y="524" width="130" height="28" rx="14" fill="#7c6cff" opacity="0.18"/>
+    <text x="660" y="544" fill="#a99dff">ACTIVE</text>
+
+    <rect x="240" y="580" width="560" height="54" rx="10" fill="#1a1a22"/>
+    <text x="262" y="614" fill="#8a8a94">VALIDATION RULES</text>
+    <rect x="640" y="594" width="130" height="28" rx="14" fill="#7c6cff" opacity="0.18"/>
+    <text x="668" y="614" fill="#a99dff">PASSED</text>
+
+    <rect x="240" y="650" width="560" height="54" rx="10" fill="#1a1a22"/>
+    <text x="262" y="684" fill="#8a8a94">APPROVAL WORKFLOW</text>
+    <rect x="640" y="664" width="130" height="28" rx="14" fill="#7c6cff" opacity="0.18"/>
+    <text x="658" y="684" fill="#a99dff">QUEUED</text>
+  </g>
+
+  <!-- status panel -->
+  <g>
+    <rect x="880" y="510" width="480" height="194" rx="10" fill="#1a1a22"/>
+    <text x="905" y="550" fill="#7c6cff" font-size="20">$ status --pipeline</text>
+    <text x="905" y="590" fill="#8a8a94" font-size="20">loans_processed:  12,408</text>
+    <text x="905" y="624" fill="#8a8a94" font-size="20">rules_evaluated:  98,113</text>
+    <text x="905" y="658" fill="#8a8a94" font-size="20">uptime:           99.98%</text>
+    <rect x="905" y="676" width="14" height="22" fill="#7c6cff"/>
+  </g>
+
+  <text x="240" y="800" fill="#5c5c64" font-size="20" letter-spacing="4">INTERNATIONAL BANKING CLIENT — LEGACY MODERNIZATION</text>
+</svg>

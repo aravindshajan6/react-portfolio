@@ -1,0 +1,82 @@
+/* ── SKILLS ────────────────────────────────────────────────── */
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 560px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .skills-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ── card ──────────────────────────────────────────────────── */
+.skill-card {
+  padding: 1.6rem 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-card__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1.4rem;
+}
+
+.skill-card__index {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+}
+
+.skill-card__pct {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.skill-card__name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+}
+
+.skill-card__tag {
+  margin-bottom: 1.6rem;
+}
+
+/* ── level bar ─────────────────────────────────────────────── */
+.skill-card__track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: visible;
+  margin-top: auto;
+}
+
+.skill-card__fill {
+  width: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 14px var(--accent-glow-strong);
+  transition: width 1.2s var(--ease-out-expo) 0.25s;
+}
+
+.skill-card.is-inview .skill-card__fill {
+  width: var(--level, 0%);
+}

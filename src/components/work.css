@@ -1,0 +1,287 @@
+/* ════════════════════════════════════════════════════════════
+   WORK — selected projects
+   Base layout = native horizontal swipe row (mobile / tablet /
+   reduced-motion at any width). Desktop with motion allowed
+   upgrades to a GSAP-pinned horizontal scroll stage.
+   ════════════════════════════════════════════════════════════ */
+
+.work {
+  overflow-x: clip;
+}
+
+/* ── swipe row (default) ─────────────────────────────────── */
+.work__viewport {
+  width: 100%;
+}
+
+.work__track {
+  display: flex;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-inline: var(--gutter);
+  padding-block: 0.5rem 1.5rem;
+  -webkit-overflow-scrolling: touch;
+  /* hide scrollbar cosmetically */
+  scrollbar-width: none;
+}
+.work__track::-webkit-scrollbar {
+  display: none;
+}
+
+/* progress UI only exists in the pinned desktop mode */
+.work__progress {
+  display: none;
+}
+
+/* ── card ────────────────────────────────────────────────── */
+.work-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: 82vw;
+  max-width: 640px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  transition:
+    border-color 0.5s var(--ease-out-expo),
+    transform 0.5s var(--ease-out-expo),
+    box-shadow 0.5s ease;
+  will-change: transform;
+}
+
+.work-card:hover,
+.work-card:focus-within {
+  border-color: var(--accent);
+  transform: translateY(-6px);
+  box-shadow: 0 18px 48px var(--accent-glow);
+}
+
+.work-card__media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-elev-2);
+}
+
+.work-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.35);
+  transition:
+    transform 0.8s var(--ease-out-expo),
+    filter 0.6s ease;
+}
+
+.work-card:hover .work-card__media img,
+.work-card:focus-within .work-card__media img {
+  transform: scale(1.05);
+  filter: saturate(1);
+}
+
+.work-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: clamp(1.2rem, 2.5vw, 1.8rem);
+}
+
+.work-card__num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+}
+
+.work-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  text-transform: uppercase;
+}
+
+.work-card__desc {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  max-width: 46ch;
+}
+
+.work-card__stack {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 2; /* keep chips readable above the overlay link */
+  pointer-events: none;
+}
+
+.work-card__chip {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  background: var(--bg);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.work-card:hover .work-card__chip {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  color: var(--text);
+}
+
+.work-card__cta {
+  margin-top: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: color 0.3s ease;
+}
+
+.work-card:hover .work-card__cta {
+  color: var(--accent);
+}
+
+.work-card__cta--private {
+  color: var(--text-dim);
+  font-weight: 400;
+}
+.work-card:hover .work-card__cta--private {
+  color: var(--text-dim);
+}
+
+.work-card__cta span[aria-hidden] {
+  transition: transform 0.4s var(--ease-out-expo);
+}
+
+.work-card:hover .work-card__cta span[aria-hidden] {
+  transform: translate(3px, -3px);
+}
+
+/* whole card clickable */
+.work-card__link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.work-card__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* ── pinned horizontal stage (desktop + motion OK) ───────── */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .work {
+    padding-block: 0; /* the 100vh stage provides its own breathing room */
+  }
+
+  .work__stage {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(1rem, 3vh, 2.5rem);
+    overflow: hidden; /* contain the translating track — no page overflow */
+    padding-block: clamp(2rem, 6vh, 4rem) clamp(1.5rem, 4vh, 3rem);
+  }
+
+  .work__head .section__title {
+    margin-bottom: 0;
+  }
+
+  .work__viewport {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .work__track {
+    overflow: visible; /* GSAP drives x — no native scrolling here */
+    scroll-snap-type: none;
+    height: 100%;
+    align-items: stretch;
+    width: max-content;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    /* first card lines up with the .container edge */
+    padding-inline: max(var(--gutter), (100vw - var(--container)) / 2);
+    padding-block: 1rem;
+    will-change: transform;
+  }
+
+  /* height-bound cards so the whole card always fits the pinned stage */
+  .work-card {
+    width: auto;
+    max-width: min(52vw, 620px);
+    height: 100%;
+    max-height: 620px;
+  }
+
+  .work-card__media {
+    flex: 1;
+    min-height: 0;
+    aspect-ratio: auto;
+  }
+
+  .work-card__body {
+    flex: 0 0 auto;
+    gap: 0.6rem;
+  }
+
+  .work-card__desc {
+    width: clamp(30ch, 34vw, 46ch);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* progress bar + counter */
+  .work__progress {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .work__bar {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .work__bar-fill {
+    height: 100%;
+    width: 100%;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    will-change: transform;
+  }
+
+  .work__counter {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--text-dim);
+    min-width: 6ch;
+    text-align: right;
+  }
+}
