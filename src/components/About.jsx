@@ -47,31 +47,29 @@ export default function About() {
     return () => io.disconnect();
   }, []);
 
-  const bioLead = `I'm a ${profile.tagline}`;
-
   return (
     <section className="section about" id="about" ref={revealRef}>
       <div className="container">
         <p className="section__index reveal"><span className="prompt">$</span> cat ./about.md</p>
         <h2 className="section__title reveal">
-          BEHIND <span className="stroke">THE CODE</span>
+          README<span className="stroke">.md</span>
         </h2>
 
         <div className="about__grid">
           {/* ── left: bio ─────────────────────────────────── */}
           <div className="about__bio">
             <p className="reveal">
-              {bioLead} From modernising a loan platform for an international
-              banking client to building real-time apps with websockets and
-              the Stream SDK, I turn ideas into fast, maintainable products —
-              and I sweat the small details that make an interface feel
-              effortless.
+              I&apos;m Aravind, a full stack developer from Kannur, Kerala. I
+              work mostly in the MERN stack. I&apos;ve built a loan platform
+              for a bank, a couple of streaming apps, and a piano that runs in
+              your browser — because why not. Lately I&apos;ve been getting
+              into automation with Python and Playwright.
             </p>
             <p className="reveal" style={{ '--reveal-delay': '0.12s' }}>
-              I&apos;m based in {profile.location}, and I&apos;m currently{' '}
-              <span className="accent">available for freelance projects</span>.
-              If you need a full-stack build shipped end to end — or a
-              front-end that actually feels good to use — let&apos;s talk.
+              Right now I&apos;m{' '}
+              <span className="accent">open to freelance work and full-time roles</span>.
+              If you&apos;re building something and need an extra pair of
+              hands, mail me. I reply fast.
             </p>
             <div
               className="about__actions reveal"

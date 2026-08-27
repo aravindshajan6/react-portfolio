@@ -93,7 +93,7 @@ export default function Work() {
         <div className="container work__head">
           <p className="section__index"><span className="prompt">$</span> git log --oneline ./work</p>
           <h2 className="section__title">
-            FEATURED <span className="stroke">WORK</span>
+            THINGS I&apos;VE <span className="stroke">BUILT</span>
           </h2>
         </div>
 

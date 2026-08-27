@@ -60,7 +60,7 @@ export default function Skills() {
       <div className="container">
         <p className="section__index reveal"><span className="prompt">$</span> ls ./skills --sort=level</p>
         <h2 className="section__title reveal">
-          MY <span className="stroke">ARSENAL</span>
+          TOOLS <span className="stroke">I USE</span>
         </h2>
 
         <div className="skills-grid" ref={gridRef}>

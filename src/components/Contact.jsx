@@ -99,18 +99,17 @@ export default function Contact() {
         <p className="section__index"><span className="prompt">$</span> ./contact.sh --now</p>
 
         <h2 className="contact__headline">
-          <span className="contact__line reveal">LET&rsquo;S BUILD</span>
+          <span className="contact__line reveal">GOT AN IDEA?</span>
           <span className="contact__line reveal" style={{ '--reveal-delay': '0.12s' }}>
-            <span className="stroke">SOMETHING</span> <span className="accent">RAD</span>
+            <span className="stroke">PING</span> <span className="accent">ME</span>
           </span>
         </h2>
 
         <div className="contact__grid">
           <div className="contact__info">
             <p className="contact__invite reveal">
-              Got a project in mind, a role to fill, or just want to talk shop?
-              My inbox is always open &mdash; drop a line and I&rsquo;ll get back
-              to you fast.
+              Have a project, a role, or a question? Mail me &mdash; I usually
+              reply within a day. WhatsApp works too if it&rsquo;s urgent.
             </p>
 
             <div className="contact__rows">

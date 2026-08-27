@@ -162,7 +162,7 @@ export default function Journey() {
       <div className="container">
         <p className="section__index"><span className="prompt">$</span> git log --graph --career</p>
         <h2 className="section__title reveal">
-          PATH <span className="stroke">SO FAR</span>
+          COMMIT <span className="stroke">HISTORY</span>
         </h2>
 
         <div className="timeline-wrap" ref={wrapRef}>
