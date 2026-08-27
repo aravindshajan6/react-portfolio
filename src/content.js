@@ -20,7 +20,7 @@ export const profile = {
   lastName: 'Shajan',
   role: 'Full Stack Developer',
   tagline:
-    'I build web apps with React and Node. MERN stack mostly, plus some Python and automation on the side.',
+    'I build automation with Python and web apps with the MERN stack — Playwright, FastAPI, React, Node.',
   location: 'Kannur, Kerala, India',
   email: 'aravindshajan6@gmail.com',
   phone: '+91 9072016134',
@@ -39,7 +39,7 @@ export const profile = {
 
 export const stats = [
   { id: 1, value: 2, suffix: '+', label: 'Years of experience' },
-  { id: 2, value: 15, suffix: '+', label: 'Projects built' },
+  { id: 2, value: 20, suffix: '+', label: 'Projects built' },
   { id: 3, value: 18, suffix: '', label: 'Technologies used' },
   { id: 4, value: 3, suffix: '', label: 'Certifications earned' },
 ];

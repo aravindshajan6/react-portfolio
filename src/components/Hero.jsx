@@ -130,7 +130,7 @@ const Hero = ({ ready }) => {
 
       <div className="hero__meta mono-label">
         <span>$ locale — kerala, IN</span>
-        <span>$ stack — react · node · mongo</span>
+        <span>$ stack — python · react · node</span>
       </div>
 
       <div className="hero__scroll" aria-hidden="true">
