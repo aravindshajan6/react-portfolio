@@ -36,3 +36,7 @@
 .ticker__sep {
   color: var(--accent-2);
 }
+
+.ticker:hover .ticker__track {
+  animation-play-state: paused;
+}

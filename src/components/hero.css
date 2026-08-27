@@ -10,6 +10,7 @@
   position: relative;
   z-index: 1;
   padding-top: 5rem;
+  will-change: transform, opacity;
 }
 
 /* elements hidden until the intro timeline runs */
@@ -38,7 +39,7 @@
   50% { opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero__title .line-mask > span {
+  .hero__title .split-char {
     transform: none !important;
   }
   .hero__prompt,
@@ -89,8 +90,12 @@
   will-change: transform;
 }
 
-.hero__title .line-mask > span {
+/* chars start below the line mask; anime.js rolls them up */
+.hero__title .split-char {
   transform: translateY(110%);
+}
+.hero--static .hero__title .split-char {
+  transform: none;
 }
 
 .hero__title-stroke {
@@ -176,7 +181,12 @@
 
 @media (max-width: 768px) {
   .hero__inner {
-    padding-top: 7rem;
+    /* leave the upper band free for the (smaller) 3D rig, and the bottom for the scroll cue */
+    padding-top: clamp(14rem, 38vh, 20rem);
+    padding-bottom: 6rem;
+  }
+  .hero__scroll {
+    bottom: 1.4rem;
   }
   .hero__meta {
     display: none;

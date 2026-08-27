@@ -98,15 +98,12 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text);
-  transition:
-    color 0.3s ease,
-    transform 0.4s var(--ease-out-expo);
+  transition: color 0.3s ease;
   will-change: transform;
 }
 
 .contact__social:hover {
   color: var(--accent);
-  transform: translateY(-3px);
 }
 
 /* right — form */
@@ -189,4 +186,17 @@
 .contact__submit:disabled {
   opacity: 0.6;
   pointer-events: none;
+}
+
+.contact__status {
+  opacity: 0;
+}
+.contact__status-ok {
+  display: inline-block;
+  color: var(--accent-2);
+  font-weight: 700;
+}
+.contact__submit.is-sent {
+  --btn-bg: color-mix(in srgb, var(--accent) 35%, var(--bg-elev-2));
+  --btn-fg: var(--text);
 }

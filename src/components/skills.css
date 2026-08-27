@@ -48,14 +48,13 @@
   }
 }
 
-/* layer 1 — entrance: keys flip up into place (via .reveal) */
-.skills-board .reveal {
+/* layer 1 — entrance: keys start folded back; anime.js flips them up in a grid wave */
+.keywrap {
+  position: relative;
+  opacity: 0;
   transform: rotateX(-58deg) translateY(46px);
   transform-origin: 50% 100%;
   transform-style: preserve-3d;
-}
-.skills-board .reveal.is-inview {
-  transform: none;
 }
 
 /* layer 2 — kept as a plain 3D context (idle wave removed: perf) */
@@ -75,8 +74,6 @@
   aspect-ratio: 1.3 / 1;
   text-align: left;
   transform-style: preserve-3d;
-  transform: rotateX(var(--rx)) rotateY(var(--ry));
-  transition: transform 0.18s ease-out;
   cursor: pointer;
   outline-offset: 6px;
   /* the visible plastic skirt: top face is inset from the base */
@@ -120,9 +117,6 @@
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
-.keywrap {
-  position: relative;
-}
 .keywrap:hover::after {
   opacity: 0.4;
 }
@@ -147,16 +141,20 @@
   );
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text) 22%, transparent);
   transform: translateZ(20px);
-  transition: transform 0.12s ease, border-color 0.3s ease;
+  transition: border-color 0.3s ease, background 0.3s ease;
   overflow: hidden;
 }
 
-/* press — the key physically travels down into its skirt */
-.keycap:active .keycap__top {
-  transform: translateZ(4px) translateY(4px);
-}
+/* press — anime.js drives the key travel; the skirt shadow softens while down */
 .keycap:active .keycap__side {
   box-shadow: 0 8px 16px -10px rgba(0, 0, 0, 0.55);
+}
+/* ghost typist */
+.keycap.is-ghost .keycap__top {
+  border-color: color-mix(in srgb, var(--key-active) 55%, var(--border));
+}
+.keycap.is-ghost .keycap__led::after {
+  background: var(--key-active);
 }
 /* the currently pressed key glows orange */
 .keycap.is-active .keycap__top {
@@ -256,7 +254,7 @@
   transform-origin: left;
   transition: transform 1.1s var(--ease-out-expo) 0.35s;
 }
-.reveal.is-inview .keycap__led::after {
+.skills-board.is-inview .keycap__led::after {
   transform: scaleX(1);
 }
 
@@ -293,7 +291,33 @@
   .keycap {
     transform: none !important;
   }
-  .skills-board .reveal {
+  .keywrap {
+    opacity: 1;
     transform: none;
+  }
+}
+
+/* ── section head: title left, 3D stack cube right ─────────── */
+.skills-head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  margin-bottom: clamp(2rem, 6vh, 4rem);
+}
+.skills-head .section__title {
+  margin-bottom: 0;
+}
+.skills-cube {
+  display: flex;
+  justify-content: center;
+}
+@media (min-width: 900px) {
+  .skills-head {
+    grid-template-columns: 1fr auto;
+  }
+  .skills-cube {
+    justify-content: flex-end;
+    padding-right: clamp(0.5rem, 3vw, 3rem);
   }
 }

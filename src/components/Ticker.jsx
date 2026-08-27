@@ -6,16 +6,18 @@ const ITEMS = [
   'MERN STACK',
   'FASTAPI · PLAYWRIGHT',
   'KANNUR, IN → REMOTE',
+  'PRESS ` FOR TERMINAL',
   'HUMANS WELCOME',
 ];
 
 // thin always-visible status strip above the nav.
 // content rendered twice inside one track = seamless -50% loop
 const Ticker = () => (
-  <div className="ticker" role="marquee" aria-label="Status: open to freelance">
-    <div className="ticker__track">
+  <div className="ticker">
+    <span className="sr-only">Status: open to freelance. Press the backtick key to open the terminal.</span>
+    <div className="ticker__track" aria-hidden="true">
       {[...ITEMS, ...ITEMS].map((item, i) => (
-        <span className="ticker__item" key={i} aria-hidden={i >= ITEMS.length}>
+        <span className="ticker__item" key={i}>
           {item} <span className="ticker__sep">+</span>
         </span>
       ))}

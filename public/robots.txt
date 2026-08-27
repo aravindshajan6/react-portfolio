@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://aravindshajan6.github.io/react-portfolio/sitemap.xml

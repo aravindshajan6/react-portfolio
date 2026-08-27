@@ -1,12 +1,61 @@
 /* ════════════════════════════════════════════════════════════
    WORK — selected projects
    Base layout = native horizontal swipe row (mobile / tablet /
-   reduced-motion at any width). Desktop with motion allowed
-   upgrades to a GSAP-pinned horizontal scroll stage.
+   reduced-motion at any width) with a dot indicator.
+   Desktop with motion allowed upgrades to a sticky stage whose
+   track is scrubbed horizontally by anime.js onScroll.
    ════════════════════════════════════════════════════════════ */
 
 .work {
   overflow-x: clip;
+}
+
+/* ── filter chips ────────────────────────────────────────── */
+.work__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: calc(-1 * clamp(1rem, 3vh, 2.5rem));
+  margin-bottom: clamp(1rem, 3vh, 2rem);
+}
+
+.work__filter {
+  cursor: pointer;
+  appearance: none;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.work__filter::before {
+  content: '#';
+  color: var(--accent-2);
+  margin-right: 0.35em;
+}
+
+.work__filter:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  color: var(--text);
+}
+
+.work__filter.is-active {
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+  background: var(--accent);
+}
+.work__filter.is-active::before {
+  color: var(--accent-contrast);
+}
+
+.work__filter:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* ── swipe row (default) ─────────────────────────────────── */
@@ -29,9 +78,64 @@
   display: none;
 }
 
-/* progress UI only exists in the pinned desktop mode */
+.work__empty {
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  padding-block: 2rem;
+}
+
+/* progress UI only exists in the sticky desktop mode */
 .work__progress {
   display: none;
+}
+
+/* ── dot indicator + counter (mobile / tablet / reduced motion) ── */
+.work__indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.work__dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.work__dot {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  width: 14px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border);
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    width 0.4s var(--ease-out-expo);
+}
+
+.work__dot.is-active {
+  background: var(--accent);
+  width: 28px;
+}
+
+.work__dot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.work__counter {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: var(--text-dim);
+  min-width: 6ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── card ────────────────────────────────────────────────── */
@@ -70,10 +174,13 @@
 }
 
 .work-card__media img {
+  --px: 0%;
+  --zoom: 1;
   width: 100%;
   height: 100%;
   object-fit: cover;
   filter: saturate(0.35);
+  transform: translateX(var(--px)) scale(var(--zoom));
   transition:
     transform 0.8s var(--ease-out-expo),
     filter 0.6s ease;
@@ -81,7 +188,7 @@
 
 .work-card:hover .work-card__media img,
 .work-card:focus-within .work-card__media img {
-  transform: scale(1.05);
+  --zoom: 1.06;
   filter: saturate(1);
 }
 
@@ -186,23 +293,50 @@
   outline-offset: -2px;
 }
 
-/* ── pinned horizontal stage (desktop + motion OK) ───────── */
+/* ── fine pointers: JS tilt owns the card transform ──────── */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .work__track {
+    perspective: 1200px;
+  }
+  .work-card {
+    transform-style: preserve-3d;
+    transition:
+      border-color 0.5s var(--ease-out-expo),
+      box-shadow 0.5s ease;
+  }
+  .work-card:hover,
+  .work-card:focus-within {
+    transform: none; /* the 3D tilt replaces the lift */
+  }
+}
+
+/* ── sticky horizontal stage (desktop + motion OK) ───────── */
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
   .work {
     padding-block: 0; /* the 100vh stage provides its own breathing room */
+    /* JS measures track.scrollWidth - viewport and writes --work-scroll */
+    height: calc(100vh + var(--work-scroll, 0px));
   }
 
   .work__stage {
+    position: sticky;
+    top: 0;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: clamp(1rem, 3vh, 2.5rem);
     overflow: hidden; /* contain the translating track — no page overflow */
-    padding-block: clamp(2rem, 6vh, 4rem) clamp(1.5rem, 4vh, 3rem);
+    /* top padding clears the fixed nav */
+    padding-block: max(6.5rem, 12vh) clamp(1.5rem, 4vh, 3rem);
   }
 
   .work__head .section__title {
+    margin-bottom: 0;
+  }
+
+  .work__filters {
+    margin-top: 1rem;
     margin-bottom: 0;
   }
 
@@ -211,10 +345,11 @@
     min-height: 0;
     display: flex;
     align-items: center;
+    will-change: transform; /* velocity skew lives here */
   }
 
   .work__track {
-    overflow: visible; /* GSAP drives x — no native scrolling here */
+    overflow: visible; /* anime drives x — no native scrolling here */
     scroll-snap-type: none;
     height: 100%;
     align-items: stretch;
@@ -226,10 +361,10 @@
     will-change: transform;
   }
 
-  /* height-bound cards so the whole card always fits the pinned stage */
+  /* fixed-size cards: the scroll distance must not change as lazy images load */
   .work-card {
-    width: auto;
-    max-width: min(52vw, 620px);
+    width: min(42vw, 620px);
+    max-width: none;
     height: 100%;
     max-height: 620px;
   }
@@ -238,6 +373,13 @@
     flex: 1;
     min-height: 0;
     aspect-ratio: auto;
+  }
+
+  /* oversize the image so the parallax (--px) never shows an edge */
+  .work-card__media img {
+    width: 114%;
+    margin-left: -7%;
+    will-change: transform;
   }
 
   .work-card__body {
@@ -277,12 +419,8 @@
     will-change: transform;
   }
 
-  .work__counter {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.25em;
-    color: var(--text-dim);
-    min-width: 6ch;
-    text-align: right;
+  /* the dot indicator belongs to the swipe row only */
+  .work__indicator {
+    display: none;
   }
 }

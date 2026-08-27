@@ -9,6 +9,10 @@ const timeFormatter = new Intl.DateTimeFormat('en-GB', {
   hour12: false,
 });
 
+// injected by vite.config.js `define`
+const BUILD_HASH = typeof __BUILD_HASH__ !== 'undefined' ? __BUILD_HASH__ : 'dev';
+const BUILD_DATE = typeof __BUILD_DATE__ !== 'undefined' ? __BUILD_DATE__ : '';
+
 export default function Footer() {
   const [time, setTime] = useState(() => timeFormatter.format(new Date()));
 
@@ -20,14 +24,14 @@ export default function Footer() {
   }, []);
 
   const backToTop = () => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+    if (typeof window.__scrollToSection === 'function') window.__scrollToSection('home');
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <footer className="footer">
       <div className="container footer__row">
-        <p className="footer__copy">&copy; 2026 Aravind Shajan</p>
+        <p className="footer__copy">&copy; {new Date().getFullYear()} Aravind Shajan</p>
 
         <p className="footer__time" aria-label="Current local time in Kannur, India">
           KANNUR, IN &mdash; <span className="footer__clock">{time}</span> IST
@@ -40,7 +44,11 @@ export default function Footer() {
 
       <div className="container">
         <p className="footer__credit">
-          $ echo "designed &amp; built by aravind shajan" — react · three.js · anime.js
+          $ echo &quot;designed &amp; built by aravind shajan&quot; — react · three.js · anime.js
+          <span className="footer__build">
+            {' '}· build <span className="footer__hash">{BUILD_HASH}</span>
+            {BUILD_DATE && ` · ${BUILD_DATE}`}
+          </span>
         </p>
       </div>
     </footer>

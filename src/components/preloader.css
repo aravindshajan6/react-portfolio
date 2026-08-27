@@ -53,3 +53,21 @@
   font-size: 1rem;
   font-variant-numeric: tabular-nums;
 }
+
+.preloader__log {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  min-width: min(22rem, 80vw);
+}
+.preloader__line {
+  opacity: 0;
+}
+.preloader__line::first-letter {
+  color: var(--accent-2);
+}

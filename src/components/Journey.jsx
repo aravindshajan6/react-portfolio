@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import { animate, createTimeline, onScroll, scrambleText } from 'animejs';
+import useAnimeScope from '../hooks/useAnimeScope';
 import useReveal from '../hooks/useReveal';
+import { prefersReducedMotion } from '../lib/motion';
 import { timeline, certifications } from '../content';
 import './journey.css';
 
@@ -12,10 +15,9 @@ const commitHash = (s) => {
 
 const tagSlug = (place) => place.toLowerCase().split(/[\s,]+/)[0];
 
-const HEX = '0123456789abcdef';
-
 /* fake verification script shown before a certificate preview */
-const certSlug = (title) => title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 24);
+const certSlug = (title) =>
+  title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 24);
 const bootLines = (slug) => [
   { text: `$ certctl --verify ${slug}.pem`, cmd: true },
   { text: 'checking issuer ............. OK' },
@@ -29,145 +31,113 @@ export default function Journey() {
   const [lightbox, setLightbox] = useState(null); // certification object or null
   const [bootStep, setBootStep] = useState(0); // lines revealed in the loader
   const [certShown, setCertShown] = useState(false);
-  const wrapRef = useRef(null);
-  const fillRef = useRef(null);
-  const headRef = useRef(null);
+  const closeRef = useRef(null);
+  const imgRef = useRef(null);
+
+  /* ── scroll-driven git rail: fill line, travelling head, lit nodes ── */
+  const [railRef] = useAnimeScope((scope) => {
+    const wrap = railRef.current;
+    if (!wrap) return;
+    const fill = wrap.querySelector('.timeline__fillline');
+    const head = wrap.querySelector('.timeline__headdot');
+    const nodes = Array.from(wrap.querySelectorAll('.timeline__entry'));
+    const hashes = Array.from(wrap.querySelectorAll('.timeline__hash'));
+
+    if (scope.matches.reduce) {
+      fill.style.transform = 'scaleY(1)';
+      head.style.opacity = '0';
+      nodes.forEach((n) => n.classList.add('is-lit'));
+      return;
+    }
+
+    // the rail "commits" as it crosses a line 72% down the viewport
+    onScroll({
+      target: wrap,
+      enter: '72% top',
+      leave: '72% bottom',
+      onUpdate: (self) => {
+        const h = wrap.offsetHeight || 1;
+        const cur = self.progress * h;
+        fill.style.transform = `scaleY(${self.progress})`;
+        head.style.transform = `translateY(${cur}px)`;
+        head.style.opacity = cur > 4 && cur < h - 2 ? '1' : '0';
+        nodes.forEach((n) => n.classList.toggle('is-lit', n.offsetTop + 14 <= cur + 1));
+      },
+    });
+
+    // commit hashes decode from hex noise when they scroll in
+    hashes.forEach((el) =>
+      animate(el, {
+        innerHTML: scrambleText({ text: el.dataset.final, chars: '0-9a-f', cursor: false, duration: 900 }),
+        autoplay: onScroll({ target: el, enter: 'bottom-=10% top', sync: 'play', repeat: false }),
+      })
+    );
+  });
 
   /* run the terminal "verification" sequence when a cert is opened */
   useEffect(() => {
     if (!lightbox) return undefined;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const lines = bootLines(certSlug(lightbox.title));
-
     setBootStep(0);
     setCertShown(false);
 
-    if (reduce) {
+    if (prefersReducedMotion()) {
       setBootStep(lines.length);
       setCertShown(true);
       return undefined;
     }
 
-    const timers = [];
-    lines.forEach((_, i) => {
-      timers.push(setTimeout(() => setBootStep(i + 1), 260 * (i + 1)));
-    });
-    timers.push(setTimeout(() => setCertShown(true), 260 * lines.length + 350));
-    return () => timers.forEach(clearTimeout);
+    const tl = createTimeline();
+    lines.forEach((_, i) => tl.call(() => setBootStep(i + 1), 260 * (i + 1)));
+    tl.call(() => setCertShown(true), 260 * lines.length + 350);
+    return () => tl.cancel();
   }, [lightbox]);
 
-  /* ── scroll-driven rail: fill line + glowing head + lit nodes ── */
+  /* certificate pops in once "verified" */
   useEffect(() => {
-    const wrap = wrapRef.current;
-    const fill = fillRef.current;
-    const head = headRef.current;
-    if (!wrap || !fill || !head) return undefined;
+    if (!certShown || !imgRef.current || prefersReducedMotion()) return undefined;
+    const a = animate(imgRef.current, {
+      opacity: [0, 1],
+      scale: [0.96, 1],
+      clipPath: ['inset(0 0 100% 0)', 'inset(0 0 0% 0)'],
+      duration: 550,
+      ease: 'out(4)',
+    });
+    return () => a.cancel();
+  }, [certShown]);
 
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const nodes = Array.from(wrap.querySelectorAll('.timeline__entry'));
-
-    if (reduce) {
-      fill.style.transform = 'scaleY(1)';
-      head.style.opacity = '0';
-      nodes.forEach((n) => n.classList.add('is-lit'));
-      return undefined;
-    }
-
-    let target = 0;
-    let current = 0;
-    let raf;
-
-    const measure = () => {
-      const rect = wrap.getBoundingClientRect();
-      // rail "commits" as it crosses 72% of the viewport height
-      const passed = window.innerHeight * 0.72 - rect.top;
-      target = Math.max(0, Math.min(rect.height, passed));
-    };
-
-    const loop = () => {
-      current += (target - current) * 0.12;
-      const h = wrap.offsetHeight || 1;
-      fill.style.transform = `scaleY(${current / h})`;
-      head.style.transform = `translateY(${current}px)`;
-      head.style.opacity = current > 4 && current < h - 2 ? '1' : '0';
-      nodes.forEach((n) => {
-        n.classList.toggle('is-lit', n.offsetTop + 14 <= current + 1);
-      });
-      raf = requestAnimationFrame(loop);
-    };
-
-    measure();
-    window.addEventListener('scroll', measure, { passive: true });
-    window.addEventListener('resize', measure);
-    raf = requestAnimationFrame(loop);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('scroll', measure);
-      window.removeEventListener('resize', measure);
-    };
-  }, []);
-
-  /* ── scramble-in the commit hashes when they enter the viewport ── */
-  useEffect(() => {
-    const wrap = wrapRef.current;
-    if (!wrap) return undefined;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const spans = Array.from(wrap.querySelectorAll('.timeline__hash'));
-    if (reduce || !spans.length) return undefined;
-
-    const timers = new Set();
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          io.unobserve(entry.target);
-          const el = entry.target;
-          const final = el.dataset.final || '';
-          const start = performance.now();
-          const tick = (now) => {
-            const p = Math.min(1, (now - start) / 900);
-            const lock = Math.floor(p * final.length);
-            let out = final.slice(0, lock);
-            for (let i = lock; i < final.length; i++) {
-              out += HEX[(Math.random() * 16) | 0];
-            }
-            el.textContent = out;
-            if (p < 1) timers.add(requestAnimationFrame(tick));
-          };
-          timers.add(requestAnimationFrame(tick));
-        });
-      },
-      { threshold: 0.6 }
-    );
-    spans.forEach((s) => io.observe(s));
-    return () => {
-      io.disconnect();
-      timers.forEach((t) => cancelAnimationFrame(t));
-    };
-  }, []);
-
+  /* dialog focus management + Esc */
   useEffect(() => {
     if (!lightbox) return undefined;
-
+    const previous = document.activeElement;
+    closeRef.current?.focus();
     const onKeyDown = (e) => {
       if (e.key === 'Escape') setLightbox(null);
+      if (e.key === 'Tab') {
+        e.preventDefault(); // single focusable control → keep focus on it
+        closeRef.current?.focus();
+      }
     };
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      previous?.focus?.({ preventScroll: true });
+    };
   }, [lightbox]);
 
   return (
     <section className="section journey" id="journey" ref={ref}>
       <div className="container">
-        <p className="section__index"><span className="prompt">$</span> git log --graph --career</p>
+        <p className="section__index reveal">
+          <span className="prompt">$</span> git log --graph --career
+        </p>
         <h2 className="section__title reveal">
           COMMIT <span className="stroke">HISTORY</span>
         </h2>
 
-        <div className="timeline-wrap" ref={wrapRef}>
-          <span className="timeline__fillline" ref={fillRef} aria-hidden="true" />
-          <span className="timeline__headdot" ref={headRef} aria-hidden="true" />
+        <div className="timeline-wrap" ref={railRef}>
+          <span className="timeline__fillline" aria-hidden="true" />
+          <span className="timeline__headdot" aria-hidden="true" />
 
           <ol className="timeline">
             {timeline.map((entry, i) => (
@@ -177,13 +147,10 @@ export default function Journey() {
                 style={{ '--reveal-delay': `${i * 0.12}s` }}
               >
                 <span className="timeline__node" aria-hidden="true" />
-                <div className="timeline__card" data-cursor="">
+                <div className="timeline__card">
                   <p className="timeline__commit">
                     <span className="timeline__star">*</span> commit{' '}
-                    <span
-                      className="timeline__hash"
-                      data-final={commitHash(entry.title + entry.place)}
-                    >
+                    <span className="timeline__hash" data-final={commitHash(entry.title + entry.place)}>
                       {commitHash(entry.title + entry.place)}
                     </span>
                     {i === 0 && <span className="timeline__ref"> (HEAD → now)</span>}
@@ -195,7 +162,7 @@ export default function Journey() {
                       {entry.kind === 'experience' ? 'Experience' : 'Education'}
                     </span>
                   </div>
-                  <h3 className="timeline__title" data-text={entry.title}>{entry.title}</h3>
+                  <h3 className="timeline__title">{entry.title}</h3>
                   <p className="timeline__place">@ {entry.place}</p>
                   <p className="timeline__desc">{entry.desc}</p>
                 </div>
@@ -216,12 +183,7 @@ export default function Journey() {
                 onClick={() => setLightbox(cert)}
                 aria-label={`Enlarge certificate: ${cert.title}`}
               >
-                <img
-                  className="certs__img"
-                  src={cert.img}
-                  alt={cert.title}
-                  loading="lazy"
-                />
+                <img className="certs__img" src={cert.img} alt={cert.title} loading="lazy" />
                 <span className="certs__title">{cert.title}</span>
               </button>
             ))}
@@ -242,6 +204,7 @@ export default function Journey() {
             className="lightbox__close"
             aria-label="Close certificate view"
             onClick={() => setLightbox(null)}
+            ref={closeRef}
           >
             &times;
           </button>
@@ -249,7 +212,9 @@ export default function Journey() {
           {!certShown && (
             <div className="lightbox__term" onClick={(e) => e.stopPropagation()}>
               <div className="lightbox__term-bar">
-                <span /><span /><span />
+                <span />
+                <span />
+                <span />
                 <em>certctl — verifying</em>
               </div>
               <div className="lightbox__term-body">
@@ -260,18 +225,16 @@ export default function Journey() {
                       {line.text}
                     </p>
                   ))}
-                <p className="lightbox__term-cursor" aria-hidden="true">▌</p>
+                <p className="lightbox__term-cursor" aria-hidden="true">
+                  ▌
+                </p>
               </div>
             </div>
           )}
 
           {certShown && (
             <>
-              <img
-                className="lightbox__img lightbox__img--reveal"
-                src={lightbox.img}
-                alt={lightbox.title}
-              />
+              <img className="lightbox__img" src={lightbox.img} alt={lightbox.title} ref={imgRef} />
               <p className="lightbox__caption mono-label">{lightbox.title}</p>
             </>
           )}

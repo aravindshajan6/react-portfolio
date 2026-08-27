@@ -1,0 +1,218 @@
+/* ── StackCube — DOM/CSS 3D cube driven by anime.js ─────────────────────── */
+.stackcube {
+  --cube-size: clamp(180px, 40vw, 260px);
+  --cube-pad: calc(var(--cube-size) * 0.07);
+  position: relative;
+  width: var(--cube-size);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--cube-size) * 0.3);
+  font-family: var(--font-mono);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* the perspective box; also the draggable trigger */
+.stackcube__stage {
+  position: relative;
+  width: var(--cube-size);
+  height: var(--cube-size);
+  perspective: calc(var(--cube-size) * 4);
+  perspective-origin: 50% 40%;
+  cursor: grab;
+  touch-action: pan-y;
+}
+.stackcube.is-grabbing .stackcube__stage { cursor: grabbing; }
+
+.stackcube__cube {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(-18deg) rotateY(28deg);
+  will-change: transform;
+}
+
+.stackcube__drag-target {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* ── faces ─────────────────────────────────────────────────────────────── */
+.stackcube__face {
+  --frx: 0deg;
+  --fry: 0deg;
+  --fz: 0.5;
+  position: absolute;
+  inset: 0;
+  padding: var(--cube-pad);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--cube-size) * 0.035);
+  background:
+    linear-gradient(to right, var(--border) 1px, transparent 1px) 0 0 / calc(var(--cube-size) / 6) 100%,
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px) 0 0 / 100% calc(var(--cube-size) / 6),
+    linear-gradient(160deg, var(--bg-elev-2), var(--bg-elev) 55%);
+  background-blend-mode: normal;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--cube-size) * 0.03);
+  color: var(--text);
+  transform: rotateY(var(--fry)) rotateX(var(--frx)) translateZ(calc(var(--cube-size) * var(--fz)));
+  backface-visibility: hidden;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+  overflow: hidden;
+}
+/* soften the grid so it reads as etched lines, not a table */
+.stackcube__face::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, var(--bg-elev-2), var(--bg-elev) 55%);
+  opacity: 0.82;
+  pointer-events: none;
+}
+.stackcube__face > * { position: relative; }
+
+@media (pointer: fine) {
+  .stackcube__face:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent-glow-strong) inset, 0 0 28px var(--accent-glow-strong);
+  }
+}
+
+/* header */
+.stackcube__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: calc(var(--cube-size) * 0.03);
+  border-bottom: 1px solid var(--border);
+}
+.stackcube__label {
+  font-size: calc(var(--cube-size) * 0.046);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.stackcube__idx {
+  font-size: calc(var(--cube-size) * 0.04);
+  color: var(--text-dim);
+  opacity: 0.7;
+}
+.stackcube__led {
+  width: calc(var(--cube-size) * 0.035);
+  height: calc(var(--cube-size) * 0.035);
+  border-radius: 50%;
+  background: var(--accent-2);
+  box-shadow: 0 0 8px var(--accent-2), 0 0 16px var(--accent-2-glow);
+  animation: stackcube-led 2.4s ease-in-out infinite;
+}
+@keyframes stackcube-led {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; box-shadow: 0 0 3px var(--accent-2); }
+}
+
+/* skill rows */
+.stackcube__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--cube-size) * 0.03);
+  margin-top: calc(var(--cube-size) * 0.01);
+}
+.stackcube__skill {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 2px;
+  align-items: end;
+  column-gap: calc(var(--cube-size) * 0.03);
+  row-gap: calc(var(--cube-size) * 0.012);
+  font-size: calc(var(--cube-size) * 0.05);
+  line-height: 1.25;
+}
+.stackcube__name {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stackcube__lvl {
+  grid-area: 1 / 2;
+  color: var(--accent-2);
+  font-size: calc(var(--cube-size) * 0.042);
+  font-variant-numeric: tabular-nums;
+}
+.stackcube__bar {
+  grid-area: 2 / 1 / 3 / 3;
+  display: block;
+  height: 2px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.stackcube__fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent-glow-strong);
+}
+
+/* corner screws */
+.stackcube__screw {
+  position: absolute;
+  width: calc(var(--cube-size) * 0.022);
+  height: calc(var(--cube-size) * 0.022);
+  border-radius: 50%;
+  background: var(--border);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text-dim) 40%, transparent);
+  --o: calc(var(--cube-size) * 0.025);
+}
+.stackcube__screw--tl { top: var(--o); left: var(--o); }
+.stackcube__screw--tr { top: var(--o); right: var(--o); }
+.stackcube__screw--bl { bottom: var(--o); left: var(--o); }
+.stackcube__screw--br { bottom: var(--o); right: var(--o); }
+
+/* ── glow + caption ───────────────────────────────────────────────────── */
+.stackcube__glow {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--cube-size) * 1.08);
+  width: calc(var(--cube-size) * 1.1);
+  height: calc(var(--cube-size) * 0.28);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, var(--accent-glow-strong), transparent 70%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.stackcube__caption {
+  position: relative;
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.stackcube__prompt { color: var(--accent-2); font-weight: 600; }
+.stackcube__caption-touch { display: none; }
+@media (pointer: coarse) {
+  .stackcube__caption-fine { display: none; }
+  .stackcube__caption-touch { display: inline; }
+}
+
+/* screen-reader only */
+.stackcube__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

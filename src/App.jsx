@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ReactLenis } from 'lenis/react';
 
 import Preloader from './components/Preloader';
@@ -13,12 +13,35 @@ import Work from './components/Work';
 import Journey from './components/Journey';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Terminal from './components/Terminal';
+import { prefersReducedMotion } from './lib/motion';
 
 function App() {
   const [ready, setReady] = useState(false);
+  const lenisRef = useRef(null);
+
+  // Lenis-aware section scrolling, shared with Nav / Terminal / Hero via lib/motion.js
+  useEffect(() => {
+    window.__scrollToSection = (id, offset = 0) => {
+      const lenis = lenisRef.current?.lenis;
+      const target = id === 'home' ? 0 : document.getElementById(id) || 0;
+      const immediate = prefersReducedMotion();
+      if (lenis) {
+        lenis.scrollTo(target, { offset, immediate, duration: 1.2 });
+      } else if (typeof target === 'number') {
+        window.scrollTo({ top: target, behavior: immediate ? 'auto' : 'smooth' });
+      } else {
+        const top = target.getBoundingClientRect().top + window.scrollY + offset;
+        window.scrollTo({ top, behavior: immediate ? 'auto' : 'smooth' });
+      }
+    };
+    return () => {
+      delete window.__scrollToSection;
+    };
+  }, []);
 
   return (
-    <ReactLenis root options={{ lerp: 0.18, duration: 0.9, wheelMultiplier: 1.15 }}>
+    <ReactLenis root ref={lenisRef} options={{ lerp: 0.12, duration: 1.1, wheelMultiplier: 1.1 }}>
       <Preloader onComplete={() => setReady(true)} />
       <Cursor />
       <Ticker />
@@ -35,6 +58,7 @@ function App() {
       </main>
 
       <Footer />
+      <Terminal />
     </ReactLenis>
   );
 }

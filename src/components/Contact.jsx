@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { animate, createAnimatable, stagger } from 'animejs';
+import useAnimeScope from '../hooks/useAnimeScope';
 import useReveal from '../hooks/useReveal';
 import { profile } from '../content';
 import './contact.css';
@@ -10,40 +12,50 @@ const socials = [
 
 export default function Contact() {
   const ref = useReveal();
-  const magneticOk = useRef(false);
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const statusRef = useRef(null);
 
-  useEffect(() => {
-    const finePointer = window.matchMedia('(pointer: fine)');
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update = () => {
-      magneticOk.current = finePointer.matches && !reducedMotion.matches;
-    };
-    update();
-    finePointer.addEventListener('change', update);
-    reducedMotion.addEventListener('change', update);
-    return () => {
-      finePointer.removeEventListener('change', update);
-      reducedMotion.removeEventListener('change', update);
-    };
-  }, []);
+  /* magnetic buttons — one Animatable per element, only on fine pointers */
+  const [gridRef, scopeRef] = useAnimeScope((scope) => {
+    const root = gridRef.current;
+    scope.data.magnets = new Map();
+    if (!root || scope.matches.reduce || !scope.matches.fine) return;
+    root.querySelectorAll('[data-magnet]').forEach((el) => {
+      scope.data.magnets.set(el, createAnimatable(el, { x: 450, y: 450, ease: 'out(3)' }));
+    });
+  });
 
   const onMagnetMove = (e) => {
-    if (!magneticOk.current) return;
-    const el = e.currentTarget;
-    const rect = el.getBoundingClientRect();
-    const x = (e.clientX - (rect.left + rect.width / 2)) * 0.3;
-    const y = (e.clientY - (rect.top + rect.height / 2)) * 0.3;
-    el.style.transition = 'transform 0.1s linear';
-    el.style.transform = `translate(${x}px, ${y}px)`;
+    const m = scopeRef.current?.data?.magnets?.get(e.currentTarget);
+    if (!m) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    m.x((e.clientX - (rect.left + rect.width / 2)) * 0.3);
+    m.y((e.clientY - (rect.top + rect.height / 2)) * 0.3);
   };
 
   const onMagnetLeave = (e) => {
-    const el = e.currentTarget;
-    el.style.transition = 'transform 0.4s var(--ease-out-expo)';
-    el.style.transform = 'translate(0, 0)';
+    const m = scopeRef.current?.data?.magnets?.get(e.currentTarget);
+    if (!m) return;
+    m.x(0);
+    m.y(0);
   };
+
+  /* status line pops in */
+  useEffect(() => {
+    if ((status !== 'sent' && status !== 'error') || !statusRef.current) return undefined;
+    const a = animate(statusRef.current, {
+      opacity: [0, 1],
+      y: [8, 0],
+      duration: 500,
+      ease: 'out(3)',
+    });
+    if (status === 'sent') {
+      const chips = statusRef.current.querySelectorAll('.contact__status-ok');
+      animate(chips, { scale: [0.6, 1], opacity: [0, 1], delay: stagger(60), ease: 'outBack(1.8)', duration: 450 });
+    }
+    return () => a.cancel();
+  }, [status]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -56,9 +68,7 @@ export default function Contact() {
     // No form-backend key configured → fall back to the visitor's mail app.
     if (!profile.web3formsKey) {
       const subject = encodeURIComponent(form.subject || `Portfolio message from ${form.name}`);
-      const body = encodeURIComponent(
-        `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
-      );
+      const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`);
       window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
       return;
     }
@@ -90,12 +100,16 @@ export default function Contact() {
   };
 
   const submitLabel =
-    status === 'sending' ? 'Sending…' : status === 'sent' ? 'Message sent ✓' : './send.sh';
+    status === 'sending' ? 'sending…' : status === 'sent' ? 'sent ✓' : './send.sh';
+
+  const fieldClass = (name) => `contact__field ${form[name] ? 'has-value' : ''}`;
 
   return (
     <section className="section contact" id="contact" ref={ref}>
       <div className="container">
-        <p className="section__index"><span className="prompt">$</span> ./contact.sh --now</p>
+        <p className="section__index reveal">
+          <span className="prompt">$</span> ./contact.sh --now
+        </p>
 
         <h2 className="contact__headline">
           <span className="contact__line reveal">GOT AN IDEA?</span>
@@ -104,11 +118,11 @@ export default function Contact() {
           </span>
         </h2>
 
-        <div className="contact__grid">
+        <div className="contact__grid" ref={gridRef}>
           <div className="contact__info">
             <p className="contact__invite reveal">
-              Have a project, a role, or a question? Mail me &mdash; I usually
-              reply within a day.
+              Have a project, a role, or a question? Mail me &mdash; I usually reply within a
+              day.
             </p>
 
             <div className="contact__rows">
@@ -120,9 +134,11 @@ export default function Contact() {
               </div>
               <div className="contact__row reveal" style={{ '--reveal-delay': '0.16s' }}>
                 <span className="mono-label">Location</span>
-                <span className="contact__link contact__link--static">
-                  {profile.location}
-                </span>
+                <span className="contact__link contact__link--static">{profile.location}</span>
+              </div>
+              <div className="contact__row reveal" style={{ '--reveal-delay': '0.22s' }}>
+                <span className="mono-label">Response time</span>
+                <span className="contact__link contact__link--static">&lt; 24 hours</span>
               </div>
             </div>
 
@@ -134,6 +150,7 @@ export default function Contact() {
                   href={s.href}
                   target="_blank"
                   rel="noreferrer noopener"
+                  data-magnet
                   onMouseMove={onMagnetMove}
                   onMouseLeave={onMagnetLeave}
                 >
@@ -143,10 +160,16 @@ export default function Contact() {
             </div>
           </div>
 
-          <form className="contact__form reveal" onSubmit={onSubmit} style={{ '--reveal-delay': '0.15s' }}>
+          <form
+            className="contact__form reveal"
+            onSubmit={onSubmit}
+            style={{ '--reveal-delay': '0.15s' }}
+          >
             <div className="contact__form-row">
-              <div className="contact__field">
-                <label className="mono-label" htmlFor="contact-name">Name</label>
+              <div className={fieldClass('name')}>
+                <label className="mono-label" htmlFor="contact-name">
+                  Name
+                </label>
                 <input
                   id="contact-name"
                   type="text"
@@ -154,12 +177,14 @@ export default function Contact() {
                   value={form.name}
                   onChange={onChange}
                   placeholder="Jane Doe"
-                  aria-label="Your name"
+                  autoComplete="name"
                   required
                 />
               </div>
-              <div className="contact__field">
-                <label className="mono-label" htmlFor="contact-email">Email</label>
+              <div className={fieldClass('email')}>
+                <label className="mono-label" htmlFor="contact-email">
+                  Email
+                </label>
                 <input
                   id="contact-email"
                   type="email"
@@ -167,14 +192,16 @@ export default function Contact() {
                   value={form.email}
                   onChange={onChange}
                   placeholder="jane@example.com"
-                  aria-label="Your email address"
+                  autoComplete="email"
                   required
                 />
               </div>
             </div>
 
-            <div className="contact__field">
-              <label className="mono-label" htmlFor="contact-subject">Subject</label>
+            <div className={fieldClass('subject')}>
+              <label className="mono-label" htmlFor="contact-subject">
+                Subject
+              </label>
               <input
                 id="contact-subject"
                 type="text"
@@ -182,12 +209,13 @@ export default function Contact() {
                 value={form.subject}
                 onChange={onChange}
                 placeholder="What's this about?"
-                aria-label="Message subject"
               />
             </div>
 
-            <div className="contact__field">
-              <label className="mono-label" htmlFor="contact-message">Message</label>
+            <div className={fieldClass('message')}>
+              <label className="mono-label" htmlFor="contact-message">
+                Message
+              </label>
               <textarea
                 id="contact-message"
                 name="message"
@@ -195,15 +223,15 @@ export default function Contact() {
                 value={form.message}
                 onChange={onChange}
                 placeholder="Tell me about your idea..."
-                aria-label="Your message"
                 required
               />
             </div>
 
             <button
               type="submit"
-              className="btn contact__submit"
+              className={`btn contact__submit ${status === 'sent' ? 'is-sent' : ''}`}
               disabled={status === 'sending'}
+              data-magnet
               onMouseMove={onMagnetMove}
               onMouseLeave={onMagnetLeave}
             >
@@ -211,13 +239,14 @@ export default function Contact() {
             </button>
 
             {status === 'error' && (
-              <p className="contact__status mono-label" role="alert">
+              <p className="contact__status mono-label" role="alert" ref={statusRef}>
                 Something went wrong — mail me directly at {profile.email}
               </p>
             )}
             {status === 'sent' && (
-              <p className="contact__status contact__status--ok mono-label" role="status">
-                Thanks! I&rsquo;ll get back to you soon.
+              <p className="contact__status contact__status--ok mono-label" role="status" ref={statusRef}>
+                <span className="contact__status-ok">[ OK ]</span> message queued ·{' '}
+                <span className="contact__status-ok">[ OK ]</span> I&rsquo;ll reply soon
               </p>
             )}
           </form>

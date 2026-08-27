@@ -1,10 +1,13 @@
 import { useEffect, useRef } from 'react';
+import { animate, createScope, onScroll, utils } from 'animejs';
+import { MEDIA } from './useAnimeScope';
 
 /**
- * Attach the returned ref to a container. Every descendant carrying
- * `.reveal` or `.reveal-clip` (or the container itself, if it has one)
- * gets `.is-inview` added once it enters the viewport (fire-once).
- * Stagger siblings by setting inline `--reveal-delay` on each element.
+ * Attach the returned ref to a container. Every descendant carrying `.reveal`
+ * fades/slides in (anime.js, scroll-triggered, fire-once) when it enters the
+ * viewport. Stagger siblings by setting inline `--reveal-delay` (seconds) on
+ * each element. `.is-inview` is added when the animation begins so CSS can
+ * hook secondary effects (bars, underlines…).
  */
 export default function useReveal() {
   const ref = useRef(null);
@@ -13,26 +16,34 @@ export default function useReveal() {
     const root = ref.current;
     if (!root) return undefined;
 
-    const targets = [
-      ...(root.matches('.reveal, .reveal-clip') ? [root] : []),
-      ...root.querySelectorAll('.reveal, .reveal-clip'),
-    ];
-    if (!targets.length) return undefined;
+    const scope = createScope({ root: ref, mediaQueries: MEDIA });
+    scope.add((self) => {
+      const els = Array.from(root.querySelectorAll('.reveal'));
+      if (!els.length) return;
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-inview');
-            io.unobserve(entry.target);
-          }
+      if (self.matches.reduce) {
+        els.forEach((el) => el.classList.add('is-inview'));
+        utils.set(els, { opacity: 1, y: 0 });
+        return;
+      }
+
+      els.forEach((el) => {
+        const delay =
+          (parseFloat(getComputedStyle(el).getPropertyValue('--reveal-delay')) || 0) * 1000;
+        animate(el, {
+          opacity: [0, 1],
+          y: [46, 0],
+          duration: 900,
+          delay,
+          ease: 'out(4)',
+          onBegin: () => el.classList.add('is-inview'),
+          // enter = element top crosses a line 8% above the viewport bottom
+          autoplay: onScroll({ target: el, enter: 'bottom-=8% top', sync: 'play', repeat: false }),
         });
-      },
-      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
-    );
+      });
+    });
 
-    targets.forEach((t) => io.observe(t));
-    return () => io.disconnect();
+    return () => scope.revert();
   }, []);
 
   return ref;

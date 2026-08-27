@@ -8,6 +8,8 @@
   border-radius: 999px;
   opacity: 0;
   will-change: transform;
+  /* anime.js writes `transform`; keep the centring on the separate `translate` property */
+  translate: -50% -50%;
 }
 
 @media (pointer: coarse) {

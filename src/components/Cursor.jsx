@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react';
+import { createAnimatable } from 'animejs';
 import './cursor.css';
 
-// Custom cursor: dot follows instantly, ring trails with lerp.
-// Morphs into a "VIEW" pill over [data-cursor="view"] targets,
-// grows over links/buttons. Fine pointers only.
+// Custom cursor: block "dot" follows instantly, ring trails via an anime.js
+// Animatable (smooth, frame-rate independent). Morphs into a "VIEW" pill over
+// [data-cursor="view"] targets, grows over links/buttons. Fine pointers only.
 const Cursor = () => {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
@@ -17,16 +18,13 @@ const Cursor = () => {
 
     const dot = dotRef.current;
     const ring = ringRef.current;
-    const mouse = { x: -100, y: -100 };
-    const pos = { x: -100, y: -100 };
-    let raf;
+    const trail = createAnimatable(ring, { x: 180, y: 180, ease: 'out(3)' });
     let visible = false;
 
     const onMove = (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-      // move the dot immediately — zero perceived lag
-      dot.style.transform = `translate3d(${mouse.x}px, ${mouse.y}px, 0) translate(-50%, -50%)`;
+      dot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+      trail.x(e.clientX);
+      trail.y(e.clientY);
       if (!visible) {
         visible = true;
         dot.style.opacity = '1';
@@ -45,20 +43,11 @@ const Cursor = () => {
       ring.style.opacity = '0';
     };
 
-    const loop = () => {
-      // snappy trail: close 45% of the gap per frame
-      pos.x += (mouse.x - pos.x) * 0.45;
-      pos.y += (mouse.y - pos.y) * 0.45;
-      ring.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -50%)`;
-      raf = requestAnimationFrame(loop);
-    };
-
     window.addEventListener('mousemove', onMove, { passive: true });
     document.documentElement.addEventListener('mouseleave', onLeave);
-    raf = requestAnimationFrame(loop);
 
     return () => {
-      cancelAnimationFrame(raf);
+      trail.revert();
       window.removeEventListener('mousemove', onMove);
       document.documentElement.removeEventListener('mouseleave', onLeave);
       document.body.classList.remove('has-custom-cursor');

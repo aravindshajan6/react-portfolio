@@ -1,22 +1,22 @@
 // ── Central content file — edit your info here ─────────────────────────────
-import Workm1 from './assets/project-m1.png';
-import Work0 from './assets/project-0.png';
-import Work1 from './assets/project-1.jpeg';
-import Work2 from './assets/project-2.jpg';
-import Work6 from './assets/project-6.jpg';
-import Work7 from './assets/project-7.png';
-import Work9 from './assets/project-9.png';
+import Workm1 from './assets/project-m1.webp';
+import Work0 from './assets/project-0.webp';
+import Work1 from './assets/project-1.webp';
+import Work2 from './assets/project-2.webp';
+import Work6 from './assets/project-6.webp';
+import Work7 from './assets/project-7.webp';
+import Work9 from './assets/project-9.webp';
 import WorkLoan from './assets/project-loan.svg';
-import WorkSteaminc from './assets/project-steaminc.png';
+import WorkSteaminc from './assets/project-steaminc.webp';
 import WorkStreamGen from './assets/project-streamgen.svg';
-import WorkFootinc from './assets/project-footinc.png';
-import WorkReelease from './assets/project-reelease.png';
-import WorkIdeary from './assets/project-ideary.png';
-import WorkMotionAI from './assets/project-motionai.png';
+import WorkFootinc from './assets/project-footinc.webp';
+import WorkReelease from './assets/project-reelease.webp';
+import WorkIdeary from './assets/project-ideary.webp';
+import WorkMotionAI from './assets/project-motionai.webp';
 
-import certNsdc from './assets/nsdcMern.png';
-import certEntriCourse from './assets/entriCourse.png';
-import certEntriInternship from './assets/entriInternship.png';
+import certNsdc from './assets/nsdcMern.webp';
+import certEntriCourse from './assets/entriCourse.webp';
+import certEntriInternship from './assets/entriInternship.webp';
 
 export const profile = {
   firstName: 'Aravind',

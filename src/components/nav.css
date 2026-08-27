@@ -156,13 +156,10 @@
   letter-spacing: -0.03em;
   padding-block: 0.35rem;
   border-bottom: 1px solid var(--border);
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
+  opacity: 0; /* anime.js staggers these in */
 }
-.nav-overlay--open .nav-overlay__link {
-  opacity: 1;
-  transform: none;
+.nav-overlay__link.is-active {
+  color: var(--accent);
 }
 .nav-overlay__link:active,
 .nav-overlay__link:hover {
@@ -176,6 +173,7 @@
 }
 
 .nav-overlay__footer {
+  opacity: 0;
   position: absolute;
   bottom: 2rem;
   left: var(--gutter);
@@ -193,5 +191,64 @@
   }
   .nav__theme {
     padding: 0.45rem 0.7rem;
+  }
+}
+
+/* ── current path in the prompt ─────────────────────────────── */
+.nav__cwd {
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+/* ── active link ────────────────────────────────────────────── */
+.nav__link--active {
+  color: var(--text);
+}
+.nav__link--active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+  background: var(--accent-2);
+}
+
+/* ── terminal trigger ───────────────────────────────────────── */
+.nav__term {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--accent-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.42rem 0.75rem;
+  transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.nav__term:hover {
+  border-color: var(--accent-2);
+  box-shadow: 0 0 18px var(--accent-2-glow);
+}
+
+/* ── page progress bar (anime.js onScroll) ──────────────────── */
+.nav__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(to right, var(--accent), var(--accent-2));
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+  pointer-events: none;
+}
+
+@media (max-width: 860px) {
+  .nav__cwd {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-overlay__link,
+  .nav-overlay__footer {
+    opacity: 1;
   }
 }

@@ -72,3 +72,10 @@
     text-align: center;
   }
 }
+
+.footer__hash {
+  color: var(--accent-2);
+}
+.footer__build {
+  white-space: nowrap;
+}
