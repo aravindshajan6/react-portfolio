@@ -1,82 +1,258 @@
-/* ── SKILLS ────────────────────────────────────────────────── */
+/* ── SKILLS — 3D mechanical keyboard ───────────────────────── */
 
-.skills-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
+/* live terminal readout above the board */
+.skills-readout {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-elev);
+  padding: 0.85rem 1.2rem;
+  margin-bottom: clamp(1.6rem, 4vh, 2.6rem);
+  color: var(--text);
+  min-height: 3.1rem;
+}
+.skills-readout .prompt {
+  color: var(--accent);
+  font-weight: 700;
+}
+.skills-readout__out {
+  color: var(--accent);
+}
+.skills-readout__hint {
+  color: var(--text-dim);
+}
+.skills-readout__cursor {
+  color: var(--accent);
+  margin-left: 0.25rem;
+  animation: blink 1.1s steps(1) infinite;
 }
 
-@media (min-width: 560px) {
-  .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
+/* ── the board ─────────────────────────────────────────────── */
+.skills-board {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(0.9rem, 2vw, 1.5rem);
+  perspective: 1400px;
+}
+
+@media (min-width: 768px) {
+  .skills-board {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .skills-grid {
+  .skills-board {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-/* ── card ──────────────────────────────────────────────────── */
-.skill-card {
-  padding: calc(1.1rem + 28px) 1.5rem 1.75rem;
+/* layer 1 — entrance: keys flip up into place (via .reveal) */
+.skills-board .reveal {
+  transform: rotateX(-58deg) translateY(46px);
+  transform-origin: 50% 100%;
+  transform-style: preserve-3d;
+}
+.skills-board .reveal.is-inview {
+  transform: none;
+}
+
+/* layer 2 — idle floating wave across the board */
+.keyfloat {
+  transform-style: preserve-3d;
+  animation: key-float 4.6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.4s);
+}
+@keyframes key-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+/* layer 3 — the keycap itself: tilt + press */
+.keycap {
+  --rx: 0deg;
+  --ry: 0deg;
+  --gx: 50%;
+  --gy: 50%;
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 0.18s ease-out;
+  cursor: pointer;
+  outline-offset: 6px;
+}
+.keycap:focus-visible {
+  outline: 2px solid var(--accent);
+}
+
+/* extruded base — the key's plastic sides */
+.keycap__side {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--bg-elev-2) 70%, black);
+  border: 1px solid var(--border);
+  transform: translateZ(0);
+  box-shadow: 0 18px 30px -12px rgba(0, 0, 0, 0.55);
+  transition: box-shadow 0.25s ease;
+}
+
+/* RGB underglow */
+.keywrap::after {
+  content: '';
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -8px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  filter: blur(16px);
+  opacity: 0.12;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.keywrap {
+  position: relative;
+}
+.keywrap:hover::after {
+  opacity: 0.4;
+}
+
+/* the top face */
+.keycap__top {
+  position: relative;
   display: flex;
   flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.1rem 1.15rem 1rem;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--text) 14%, var(--border));
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--bg-elev-2) 65%, var(--text) 4%),
+    var(--bg-elev)
+  );
+  transform: translateZ(18px);
+  transition: transform 0.12s ease, border-color 0.3s ease;
+  overflow: hidden;
+  min-height: 100%;
 }
 
-.skill-card__top {
+/* press — the key physically travels down */
+.keycap:active .keycap__top {
+  transform: translateZ(5px);
+}
+.keycap:active .keycap__side {
+  box-shadow: 0 8px 16px -10px rgba(0, 0, 0, 0.55);
+}
+.keycap.is-active .keycap__top {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+}
+.keywrap:has(.is-active)::after {
+  opacity: 0.5;
+}
+
+/* glare that follows the cursor */
+.keycap__glare {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    240px circle at var(--gx) var(--gy),
+    rgba(255, 255, 255, 0.14),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.keycap:hover .keycap__glare {
+  opacity: 1;
+}
+
+/* key legends */
+.keycap__row {
   display: flex;
-  align-items: baseline;
   justify-content: space-between;
-  margin-bottom: 1.4rem;
-}
-
-.skill-card__index {
+  align-items: baseline;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-dim);
+}
+.keycap__index {
+  font-size: 0.72rem;
   letter-spacing: 0.2em;
+  color: var(--text-dim);
 }
-
-.skill-card__pct {
-  font-family: var(--font-mono);
+.keycap__pct {
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
-
-.skill-card__name {
+.keycap__name {
   font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 600;
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  font-weight: 700;
   letter-spacing: -0.02em;
-  margin-bottom: 0.35rem;
+  color: var(--text);
+}
+.keycap__tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-dim);
 }
 
-.skill-card__tag {
-  margin-bottom: 1.6rem;
-}
-
-/* ── level bar ─────────────────────────────────────────────── */
-.skill-card__track {
+/* LED level strip — lights up to the skill level */
+.keycap__led {
+  margin-top: 0.7rem;
   height: 4px;
   border-radius: 999px;
   background: var(--border);
-  overflow: visible;
-  margin-top: auto;
+  position: relative;
+  overflow: hidden;
 }
-
-.skill-card__fill {
-  width: 0;
-  height: 100%;
-  border-radius: 999px;
-  background: var(--accent);
-  box-shadow: 0 0 14px var(--accent-glow-strong);
-  transition: width 1.2s var(--ease-out-expo) 0.25s;
-}
-
-.skill-card.is-inview .skill-card__fill {
+.keycap__led::after {
+  content: '';
+  position: absolute;
+  inset: 0;
   width: var(--level, 0%);
+  border-radius: inherit;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.1s var(--ease-out-expo) 0.35s;
+}
+.reveal.is-inview .keycap__led::after {
+  transform: scaleX(1);
+}
+
+/* light theme: softer shadows, plastic reads beige */
+[data-theme='light'] .keycap__side {
+  background: color-mix(in srgb, var(--bg-elev-2) 80%, black 6%);
+  box-shadow: 0 16px 26px -14px rgba(40, 36, 20, 0.35);
+}
+[data-theme='light'] .keycap__glare {
+  background: radial-gradient(
+    240px circle at var(--gx) var(--gy),
+    rgba(255, 255, 255, 0.5),
+    transparent 60%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .keyfloat {
+    animation: none;
+  }
+  .keycap {
+    transform: none !important;
+  }
+  .skills-board .reveal {
+    transform: none;
+  }
 }
