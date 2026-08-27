@@ -32,10 +32,113 @@
   height: 11px;
   transform: translateX(-5px);
   border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  z-index: 2;
+}
+
+/* node "commits" once the scroll head passes it */
+.timeline__entry.is-lit .timeline__node {
   background: var(--accent);
+  border-color: var(--accent);
   box-shadow:
     0 0 0 5px var(--accent-glow),
     0 0 18px var(--accent-glow-strong);
+}
+.timeline__entry.is-lit .timeline__node::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  animation: node-ping 2.2s cubic-bezier(0, 0.6, 0.4, 1) infinite;
+}
+@keyframes node-ping {
+  0% { transform: scale(1); opacity: 0.9; }
+  75%, 100% { transform: scale(3.2); opacity: 0; }
+}
+
+/* ── scroll-driven rail: fill + travelling head ─────────── */
+.timeline-wrap {
+  position: relative;
+}
+
+.timeline__fillline {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  width: 2px;
+  margin-left: -0.5px;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--accent) 55%, transparent),
+    var(--accent)
+  );
+  box-shadow: 0 0 14px var(--accent-glow-strong);
+  transform: scaleY(0);
+  transform-origin: top;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.timeline__headdot {
+  position: absolute;
+  top: 0;
+  left: -6.5px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow:
+    0 0 10px var(--accent),
+    0 0 34px var(--accent-glow-strong);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── git-log commit line ─────────────────────────────────── */
+.timeline__commit {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-bottom: 0.55rem;
+  letter-spacing: 0.02em;
+}
+.timeline__star {
+  color: var(--accent);
+  font-weight: 700;
+}
+.timeline__hash {
+  color: var(--accent);
+  font-weight: 600;
+}
+.timeline__ref {
+  color: #28c840;
+}
+.timeline__tag {
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* CRT glitch on hover */
+.timeline__card:hover .timeline__title {
+  animation: title-glitch 0.45s steps(2) infinite;
+}
+@keyframes title-glitch {
+  0% { text-shadow: 2px 0 rgba(255, 0, 255, 0.55), -2px 0 rgba(0, 255, 255, 0.55); transform: translateX(0); }
+  25% { text-shadow: -2px 0 rgba(255, 0, 255, 0.55), 2px 0 rgba(0, 255, 255, 0.55); transform: translateX(1px); }
+  50% { text-shadow: 2px 1px rgba(255, 0, 255, 0.55), -2px -1px rgba(0, 255, 255, 0.55); transform: translateX(-1px); }
+  100% { text-shadow: -1px 0 rgba(255, 0, 255, 0.55), 1px 0 rgba(0, 255, 255, 0.55); transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .timeline__card:hover .timeline__title,
+  .timeline__entry.is-lit .timeline__node::after {
+    animation: none;
+  }
 }
 
 .timeline__meta {
@@ -131,6 +234,14 @@
   .timeline__entry:nth-child(even) .timeline__desc {
     margin-left: auto;
   }
+
+  .timeline__fillline {
+    left: 50%;
+  }
+
+  .timeline__headdot {
+    left: calc(50% - 7px);
+  }
 }
 
 /* ── certifications ──────────────────────────────────────── */
@@ -181,7 +292,7 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 17px 17px 0 0;
+  border-radius: 0;
   border-bottom: 1px solid var(--border);
   transition: transform 0.6s var(--ease-out-expo);
 }
@@ -257,4 +368,83 @@
   color: var(--accent);
   border-color: var(--accent);
   transform: rotate(90deg);
+}
+
+/* ── lightbox terminal loader ────────────────────────────── */
+.lightbox__term {
+  width: min(560px, 92vw);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox__term-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.6rem 1rem;
+  background: var(--bg-elev-2);
+  border-bottom: 1px solid var(--border);
+}
+.lightbox__term-bar span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.lightbox__term-bar span:nth-child(1) { background: #ff5f57; }
+.lightbox__term-bar span:nth-child(2) { background: #febc2e; }
+.lightbox__term-bar span:nth-child(3) { background: #28c840; }
+.lightbox__term-bar em {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  margin-left: 0.6rem;
+}
+
+.lightbox__term-body {
+  padding: 1.1rem 1.2rem 1.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.9;
+  min-height: 12rem;
+}
+.lightbox__term-body .is-cmd {
+  color: var(--text);
+  font-weight: 600;
+}
+.lightbox__term-body .is-cmd::first-letter {
+  color: var(--accent);
+}
+.lightbox__term-body .is-out {
+  color: var(--text-dim);
+  padding-left: 1.2ch;
+}
+.lightbox__term-body .is-out::after {
+  content: '';
+}
+
+.lightbox__term-cursor {
+  color: var(--accent);
+  animation: blink 1s steps(1) infinite;
+}
+
+/* certificate pops in after "verification" */
+.lightbox__img--reveal {
+  animation: cert-reveal 0.5s var(--ease-out-expo) both;
+}
+@keyframes cert-reveal {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    clip-path: inset(0 0 0 0);
+  }
 }
