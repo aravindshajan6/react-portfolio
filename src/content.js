@@ -10,6 +10,9 @@ import WorkLoan from './assets/project-loan.svg';
 import WorkSteaminc from './assets/project-steaminc.png';
 import WorkStreamGen from './assets/project-streamgen.svg';
 import WorkFootinc from './assets/project-footinc.png';
+import WorkReelease from './assets/project-reelease.png';
+import WorkIdeary from './assets/project-ideary.png';
+import WorkMotionAI from './assets/project-motionai.png';
 
 import certNsdc from './assets/nsdcMern.png';
 import certEntriCourse from './assets/entriCourse.png';
@@ -20,7 +23,7 @@ export const profile = {
   lastName: 'Shajan',
   role: 'Full Stack Developer',
   tagline:
-    'I build automation with Python and web apps with the MERN stack — Playwright, FastAPI, React, Node.',
+    'I build automation with Python and web apps with MERN stack — Playwright, FastAPI, React, Node.',
   location: 'Kannur, Kerala, India',
   email: 'aravindshajan6@gmail.com',
   phone: '+91 9072016134',
@@ -38,7 +41,7 @@ export const profile = {
 };
 
 export const stats = [
-  { id: 1, value: 2, suffix: '+', label: 'Years of experience' },
+  { id: 1, value: 3, suffix: '+', label: 'Years of experience' },
   { id: 2, value: 20, suffix: '+', label: 'Projects built' },
   { id: 3, value: 18, suffix: '', label: 'Technologies used' },
   { id: 4, value: 3, suffix: '', label: 'Certifications earned' },
@@ -111,6 +114,33 @@ export const projects = [
     title: 'Loan Management System',
     desc: "Backend for a bank's loan-approval system — origination, validation rules, workflows. Private client work, so no demo.",
     stack: ['Node.js', 'Express', 'MongoDB', 'REST'],
+    link: null,
+    featured: true,
+  },
+  {
+    id: 14,
+    img: WorkReelease,
+    title: 'Reelease',
+    desc: 'All-in-one AI content suite — text-to-image, image-to-video, and social-ready reels from one dashboard.',
+    stack: ['React', 'Node.js', 'AI APIs'],
+    link: null,
+    featured: true,
+  },
+  {
+    id: 15,
+    img: WorkMotionAI,
+    title: 'MotionAI',
+    desc: 'Editorial-grade AI video studio — drop a photo, pick an effect, get a social-ready motion clip.',
+    stack: ['React', 'AI Video', 'Templates'],
+    link: null,
+    featured: true,
+  },
+  {
+    id: 16,
+    img: WorkIdeary,
+    title: 'Ideary',
+    desc: 'AI website builder — describe the idea and it generates the sitemap, structure, and UX wireframes, ready to export.',
+    stack: ['React', 'TypeScript', 'Supabase', 'OpenAI'],
     link: null,
     featured: true,
   },
