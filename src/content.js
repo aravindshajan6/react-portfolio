@@ -205,7 +205,7 @@ export const projects = [
     title: 'Elecstore',
     desc: 'Considered-tech storefront — curated catalogue with search and saved items, multi-step checkout with Razorpay, coupons, order history, and an admin area for products, orders and a sales dashboard. Shipped as a Docker + nginx stack.',
     stack: ['React', 'Redux', 'Framer Motion', 'Express', 'MongoDB', 'Razorpay', 'Docker'],
-    link: 'https://elecstore.onrender.com',
+    link: 'https://elecstore-web.onrender.com/shop',
     repo: 'https://github.com/aravindshajan6/ecommerce-app',
     featured: true,
   },
