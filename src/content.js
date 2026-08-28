@@ -148,9 +148,9 @@ export const projects = [
     id: 15,
     img: WorkMotionAI,
     title: 'MotionAI',
-    desc: 'Editorial-grade AI video studio (live as Pixloops) — drop a photo, pick an effect, get a social-ready motion clip.',
+    desc: 'Editorial-grade AI video studio — drop a photo, pick an effect, get a social-ready motion clip. Client work, so no public demo.',
     stack: ['React', 'AI Video', 'Templates'],
-    link: 'https://pixloops.app/',
+    link: null,
     featured: true,
   },
   {
