@@ -155,8 +155,8 @@ export const projects = [
   {
     id: 16,
     img: WorkIdeary,
-    title: 'Ideary',
-    desc: 'AI website builder — describe the idea and it generates the sitemap, structure, and UX wireframes, ready to export.',
+    title: 'Blueprint',
+    desc: 'AI website builder — describe the idea and it generates the sitemap, structure, and UX wireframes, ready to export. Client project, so no public demo.',
     stack: ['React', 'TypeScript', 'Supabase', 'OpenAI'],
     link: null,
     featured: true,
