@@ -4,8 +4,6 @@ import WorkSanctum from './assets/project-devotion.webp';
 import WorkSportscast from './assets/project-sportscast.webp';
 import WorkElecstore from './assets/project-elecstore.webp';
 import Work1 from './assets/project-1.webp';
-import Work2 from './assets/project-2.webp';
-import Work6 from './assets/project-6.webp';
 import Work7 from './assets/project-7.webp';
 import WorkNova from './assets/project-novacommerce.webp';
 import WorkLoan from './assets/project-loan.svg';
@@ -13,6 +11,7 @@ import WorkSteaminc from './assets/project-steaminc.webp';
 import WorkStreamGen from './assets/project-streamgen.svg';
 import WorkFootinc from './assets/project-footinc.webp';
 import WorkReelform from './assets/project-reelform.webp';
+import WorkValodex from './assets/project-valodex.webp';
 import WorkBlueprint from './assets/project-blueprint.webp';
 import WorkKinema from './assets/project-kinema.webp';
 
@@ -135,6 +134,16 @@ export const projects = [
     featured: true,
   },
   {
+    id: 20,
+    img: WorkValodex,
+    title: 'Valodex',
+    desc: 'A Valorant codex — every agent, weapon, map, skin, bundle, rank and season pulled live from the game’s own data, plus a time-to-kill calculator, rendered with Three.js scenes and anime.js motion.',
+    stack: ['Next.js 16', 'React 19', 'TypeScript', 'Three.js', 'Drizzle', 'Postgres'],
+    link: 'https://valodex.sapper.top',
+    repo: 'https://github.com/aravindshajan6/valodex',
+    featured: true,
+  },
+  {
     id: 15,
     img: WorkKinema,
     title: 'Kinema',
@@ -243,24 +252,6 @@ export const projects = [
     desc: 'Property listing website with modern UI.',
     stack: ['React'],
     link: 'https://aravindshajan6.github.io/real-estate-website/',
-    featured: false,
-  },
-  {
-    id: 11,
-    img: Work6,
-    title: 'Piano App',
-    desc: 'Playable piano in the browser.',
-    stack: ['JavaScript', 'HTML', 'CSS'],
-    link: 'https://aravindshajan6.github.io/piano/',
-    featured: false,
-  },
-  {
-    id: 12,
-    img: Work2,
-    title: 'Frontend Blog',
-    desc: 'Clean, responsive blog layout.',
-    stack: ['HTML', 'CSS'],
-    link: 'https://aravindshajan6.github.io/frontendblog/',
     featured: false,
   },
 ];
