@@ -46,22 +46,22 @@ export const stats = [
 ];
 
 export const skills = [
-  { id: 1, name: 'JavaScript', level: 85, tag: 'language' },
-  { id: 2, name: 'React', level: 82, tag: 'frontend' },
-  { id: 3, name: 'Next.js', level: 70, tag: 'frontend' },
-  { id: 4, name: 'Node.js', level: 78, tag: 'backend' },
-  { id: 5, name: 'Express', level: 78, tag: 'backend' },
-  { id: 6, name: 'MongoDB', level: 74, tag: 'database' },
-  { id: 7, name: 'MySQL', level: 65, tag: 'database' },
-  { id: 8, name: 'HTML & CSS', level: 85, tag: 'frontend' },
-  { id: 9, name: 'Tailwind', level: 75, tag: 'frontend' },
-  { id: 10, name: 'Python', level: 75, tag: 'language' },
-  { id: 11, name: 'FastAPI', level: 65, tag: 'backend' },
-  { id: 12, name: 'Playwright', level: 70, tag: 'automation' },
-  { id: 13, name: 'Selenium', level: 70, tag: 'automation' },
-  { id: 14, name: 'Solidity', level: 50, tag: 'web3' },
-  { id: 15, name: 'Git & GitHub', level: 80, tag: 'tools' },
-  { id: 16, name: 'Azure DevOps', level: 60, tag: 'tools' },
+  { id: 1, name: 'JavaScript', level: 90, tag: 'language' },
+  { id: 2, name: 'React', level: 87, tag: 'frontend' },
+  { id: 3, name: 'Next.js', level: 75, tag: 'frontend' },
+  { id: 4, name: 'Node.js', level: 83, tag: 'backend' },
+  { id: 5, name: 'Express', level: 83, tag: 'backend' },
+  { id: 6, name: 'MongoDB', level: 79, tag: 'database' },
+  { id: 7, name: 'MySQL', level: 70, tag: 'database' },
+  { id: 8, name: 'HTML & CSS', level: 90, tag: 'frontend' },
+  { id: 9, name: 'Tailwind', level: 80, tag: 'frontend' },
+  { id: 10, name: 'Python', level: 80, tag: 'language' },
+  { id: 11, name: 'FastAPI', level: 70, tag: 'backend' },
+  { id: 12, name: 'Playwright', level: 75, tag: 'automation' },
+  { id: 13, name: 'Selenium', level: 75, tag: 'automation' },
+  { id: 14, name: 'Solidity', level: 55, tag: 'web3' },
+  { id: 15, name: 'Git & GitHub', level: 85, tag: 'tools' },
+  { id: 16, name: 'Azure DevOps', level: 65, tag: 'tools' },
 ];
 
 export const timeline = [
