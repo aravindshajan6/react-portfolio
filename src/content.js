@@ -12,9 +12,9 @@ import WorkLoan from './assets/project-loan.svg';
 import WorkSteaminc from './assets/project-steaminc.webp';
 import WorkStreamGen from './assets/project-streamgen.svg';
 import WorkFootinc from './assets/project-footinc.webp';
-import WorkReelease from './assets/project-reelease.webp';
-import WorkIdeary from './assets/project-ideary.webp';
-import WorkMotionAI from './assets/project-motionai.webp';
+import WorkReelform from './assets/project-reelform.webp';
+import WorkBlueprint from './assets/project-blueprint.webp';
+import WorkKinema from './assets/project-kinema.webp';
 
 import certNsdc from './assets/nsdcMern.webp';
 import certEntriCourse from './assets/entriCourse.webp';
@@ -127,7 +127,7 @@ export const projects = [
   },
   {
     id: 14,
-    img: WorkReelease,
+    img: WorkReelform,
     title: 'Reelform',
     desc: 'All-in-one AI content suite — text-to-image, image-to-video, and social-ready reels from one dashboard. Client project, so no public demo.',
     stack: ['React', 'Node.js', 'AI APIs'],
@@ -136,7 +136,7 @@ export const projects = [
   },
   {
     id: 15,
-    img: WorkMotionAI,
+    img: WorkKinema,
     title: 'Kinema',
     desc: 'Editorial-grade AI video studio — drop a photo, pick an effect, get a social-ready motion clip. Client work, so no public demo.',
     stack: ['React', 'AI Video', 'Templates'],
@@ -154,7 +154,7 @@ export const projects = [
   },
   {
     id: 16,
-    img: WorkIdeary,
+    img: WorkBlueprint,
     title: 'Blueprint',
     desc: 'AI website builder — describe the idea and it generates the sitemap, structure, and UX wireframes, ready to export. Client project, so no public demo.',
     stack: ['React', 'TypeScript', 'Supabase', 'OpenAI'],
@@ -181,6 +181,15 @@ export const projects = [
     featured: true,
   },
   {
+    id: 2,
+    img: WorkSteaminc,
+    title: 'Steaminc',
+    desc: 'Finds where any movie is legally streaming in your region, and plays public-domain films straight from the Internet Archive.',
+    stack: ['Node.js', 'JavaScript', 'TMDB API', 'Docker'],
+    link: 'https://steaminc.onrender.com/',
+    featured: true,
+  },
+  {
     id: 6,
     img: WorkNova,
     title: 'Nova Commerce',
@@ -197,15 +206,6 @@ export const projects = [
     desc: 'Football, floodlit — live scores, fixtures, standings, FPL and deep match stats for every league that matters, rendered like a night game.',
     stack: ['Next.js', 'React', 'Live Data'],
     link: 'https://footinc.onrender.com',
-    featured: true,
-  },
-  {
-    id: 2,
-    img: WorkSteaminc,
-    title: 'Steaminc',
-    desc: 'Finds where any movie is legally streaming in your region, and plays public-domain films straight from the Internet Archive.',
-    stack: ['Node.js', 'JavaScript', 'TMDB API', 'Docker'],
-    link: 'https://steaminc.onrender.com/',
     featured: true,
   },
   {
