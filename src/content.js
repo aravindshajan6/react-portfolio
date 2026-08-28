@@ -1,4 +1,5 @@
 // ── Central content file — edit your info here ─────────────────────────────
+import WorkSanctum from './assets/project-devotion.webp';
 import WorkSportscast from './assets/project-sportscast.webp';
 import Work0 from './assets/project-0.webp';
 import Work1 from './assets/project-1.webp';
@@ -106,6 +107,15 @@ export const certifications = [
 ];
 
 export const projects = [
+  {
+    id: 18,
+    img: WorkSanctum,
+    title: 'Sanctum',
+    desc: 'Devotional-services platform — temple puja bookings, live darshan, prasad delivery and Vedic astrologer consults, with a warm editorial UI. Client project, so no public link.',
+    stack: ['React', 'TanStack Start', 'TypeScript', 'Nginx'],
+    link: null,
+    featured: true,
+  },
   {
     id: 17,
     img: WorkSportscast,
