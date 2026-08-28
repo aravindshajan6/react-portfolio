@@ -2,7 +2,7 @@
 import WorkArgus from './assets/project-argus.webp';
 import WorkSanctum from './assets/project-devotion.webp';
 import WorkSportscast from './assets/project-sportscast.webp';
-import Work0 from './assets/project-0.webp';
+import WorkElecstore from './assets/project-elecstore.webp';
 import Work1 from './assets/project-1.webp';
 import Work2 from './assets/project-2.webp';
 import Work6 from './assets/project-6.webp';
@@ -200,6 +200,16 @@ export const projects = [
     featured: true,
   },
   {
+    id: 5,
+    img: WorkElecstore,
+    title: 'Elecstore',
+    desc: 'Considered-tech storefront — curated catalogue, search, bag and checkout with JWT auth, order history, admin product/order management and PayPal/Razorpay payments, shipped as a Docker + nginx stack.',
+    stack: ['React', 'Redux', 'Express', 'MongoDB', 'Docker', 'Nginx'],
+    link: 'https://elecstore.onrender.com',
+    repo: 'https://github.com/aravindshajan6/ecommerce-app',
+    featured: true,
+  },
+  {
     id: 13,
     img: WorkFootinc,
     title: 'Footinc',
@@ -215,15 +225,6 @@ export const projects = [
     desc: 'Chat and video calls in the browser, built on the Stream SDK with JWT auth.',
     stack: ['React', 'Stream SDK', 'Express', 'MongoDB'],
     link: 'https://github.com/aravindshajan6/StreamGen',
-    featured: true,
-  },
-  {
-    id: 5,
-    img: Work0,
-    title: 'E-Commerce App',
-    desc: 'Online store with cart, orders, JWT auth, and PayPal/Razorpay payments.',
-    stack: ['MongoDB', 'Express', 'React', 'Redux'],
-    link: 'https://elecstore.onrender.com',
     featured: true,
   },
   {
