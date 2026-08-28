@@ -5,7 +5,7 @@ import Work1 from './assets/project-1.webp';
 import Work2 from './assets/project-2.webp';
 import Work6 from './assets/project-6.webp';
 import Work7 from './assets/project-7.webp';
-import Work9 from './assets/project-9.webp';
+import WorkNova from './assets/project-novacommerce.webp';
 import WorkLoan from './assets/project-loan.svg';
 import WorkSteaminc from './assets/project-steaminc.webp';
 import WorkStreamGen from './assets/project-streamgen.svg';
@@ -117,6 +117,16 @@ export const projects = [
     featured: true,
   },
   {
+    id: 6,
+    img: WorkNova,
+    title: 'Nova Commerce',
+    desc: 'E-commerce analytics platform — revenue intelligence, cohort retention, RFM segments, Holt forecasting, a live order feed and a 3D order globe over a Shopify-style dataset.',
+    stack: ['React 19', 'Three.js', 'anime.js', 'Recharts', 'Express', 'MongoDB', 'Docker'],
+    link: 'https://ecommerce-dashboard-a3ap.onrender.com/',
+    repo: 'https://github.com/aravindshajan6/Ecommerce-Dashboard-Analytics',
+    featured: true,
+  },
+  {
     id: 1,
     img: WorkLoan,
     title: 'Loan Management System',
@@ -187,15 +197,6 @@ export const projects = [
     stack: ['MongoDB', 'Express', 'React', 'Redux'],
     link: 'https://elecstore.onrender.com',
     featured: true,
-  },
-  {
-    id: 6,
-    img: Work9,
-    title: 'E-Commerce Dashboard',
-    desc: 'Admin dashboard with live charts and sales analytics.',
-    stack: ['MERN', 'Charts'],
-    link: 'https://ecommerce-dashboard-a3ap.onrender.com/',
-    featured: false,
   },
   {
     id: 8,

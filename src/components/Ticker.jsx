@@ -6,8 +6,6 @@ const ITEMS = [
   'MERN STACK',
   'FASTAPI · PLAYWRIGHT',
   'KERALA, IN → REMOTE',
-  'PRESS ` FOR TERMINAL',
-  'HUMANS WELCOME',
 ];
 
 // thin always-visible status strip above the nav.
