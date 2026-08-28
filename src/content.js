@@ -68,6 +68,14 @@ export const skills = [
 
 export const timeline = [
   {
+    id: 0,
+    kind: 'experience',
+    year: 'May 2026 — Present',
+    title: 'Full Stack Developer',
+    place: 'Synctric',
+    desc: 'Building client products end to end — an intelligence console, a devotional-services platform and AI content tools. React on the front, FastAPI and Node behind it.',
+  },
+  {
     id: 1,
     kind: 'experience',
     year: 'Jan 2025 — Nov 2025',
