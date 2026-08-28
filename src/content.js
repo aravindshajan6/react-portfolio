@@ -1,4 +1,5 @@
 // ── Central content file — edit your info here ─────────────────────────────
+import WorkArgus from './assets/project-argus.webp';
 import WorkSanctum from './assets/project-devotion.webp';
 import WorkSportscast from './assets/project-sportscast.webp';
 import Work0 from './assets/project-0.webp';
@@ -107,6 +108,15 @@ export const certifications = [
 ];
 
 export const projects = [
+  {
+    id: 19,
+    img: WorkArgus,
+    title: 'Argus',
+    desc: 'Brand & media intelligence console — keyword watchlists, social spike detection, a geo common-operating-picture map, anomaly alerts, AI-written briefs and multi-tenant role-based access. Client project, so no public link.',
+    stack: ['React', 'MapLibre', 'FastAPI', 'Python'],
+    link: null,
+    featured: true,
+  },
   {
     id: 18,
     img: WorkSanctum,
