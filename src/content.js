@@ -59,9 +59,9 @@ export const skills = [
   { id: 11, name: 'FastAPI', level: 70, tag: 'backend' },
   { id: 12, name: 'Playwright', level: 75, tag: 'automation' },
   { id: 13, name: 'Selenium', level: 75, tag: 'automation' },
-  { id: 14, name: 'Solidity', level: 55, tag: 'web3' },
+  { id: 14, name: 'Solidity', level: 70, tag: 'web3' },
   { id: 15, name: 'Git & GitHub', level: 85, tag: 'tools' },
-  { id: 16, name: 'Azure DevOps', level: 65, tag: 'tools' },
+  { id: 16, name: 'Azure DevOps', level: 70, tag: 'tools' },
 ];
 
 export const timeline = [
