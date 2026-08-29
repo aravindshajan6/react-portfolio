@@ -196,7 +196,7 @@ export const projects = [
     title: 'Sportscast',
     desc: 'Live football scores, fixtures, 3D formation pitch, match stats and an RSS news hub — React 19 + anime.js front, Express 5 + MongoDB API, shipped with Docker.',
     stack: ['React', 'anime.js', 'Express', 'MongoDB', 'Docker'],
-    link: 'https://sportscast-web.onrender.com/',
+    link: 'https://sportscast.sapper.top',
     repo: 'https://github.com/aravindshajan6/SportsLive',
     featured: true,
   },
