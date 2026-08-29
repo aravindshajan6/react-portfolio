@@ -12,6 +12,7 @@ import WorkStreamGen from './assets/project-streamgen.svg';
 import WorkFootinc from './assets/project-footinc.webp';
 import WorkReelform from './assets/project-reelform.webp';
 import WorkValodex from './assets/project-valodex.webp';
+import WorkAuctioneer from './assets/project-auctioneer.webp';
 import WorkBlueprint from './assets/project-blueprint.webp';
 import WorkKinema from './assets/project-kinema.webp';
 
@@ -159,6 +160,16 @@ export const projects = [
     desc: 'Devotional-services platform — temple puja bookings, live darshan, prasad delivery and Vedic astrologer consults, with a warm editorial UI. Client project, so no public link.',
     stack: ['React', 'TanStack Start', 'TypeScript', 'Nginx'],
     link: null,
+    featured: true,
+  },
+  {
+    id: 21,
+    img: WorkAuctioneer,
+    title: 'Auctioneer',
+    desc: 'A live auction house on the web — real-time bidding over Socket.IO, eBay-style proxy bids to a sealed ceiling, hidden reserves, a two-minute anti-snipe soft close, and a double-entry ledger behind every deposit.',
+    stack: ['Next.js 16', 'React 19', 'TypeScript', 'Socket.IO', 'Drizzle', 'Postgres', 'Three.js'],
+    link: 'https://auctioneer.sapper.top/',
+    repo: 'https://github.com/aravindshajan6/auctioneer',
     featured: true,
   },
   {
